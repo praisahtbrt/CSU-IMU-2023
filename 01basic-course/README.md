@@ -5,7 +5,7 @@
  - Machine Learning
  - Data Assimilation
  
- This course is a pre-requisite for the [Adavnced Course](02advanced-course)
+ This course is a pre-requisite for the [Advanced Course](02advanced-course)
  
  
  ## Lectures

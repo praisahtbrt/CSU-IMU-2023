@@ -1,7 +1,7 @@
 # CSU-IMU-2023
  Basic and advanced courses on Machine learning and Data Assimilation
  
- Here you will find all the material for 2 courses that will be held at Caraga State Universit in October 2023. The IMU provided partial funding.
+ Here you will find all the material for 2 courses that will be held at Caraga State Universit in October 2023. Partial funding was provied by the [IMU](https://www.mathunion.org/cdc/lecturing/volunteer-lecturer-program)'s volunteer lecturer program.
  
  ## [Basic Course](01basic-course) (30h)
  
@@ -32,8 +32,8 @@
 - A Python 3 distribution configured for scientific computing. The simplest way to set this up is by installing the [Miniconda](https://docs.conda.io/en/latest/miniconda.html) distribution, or the complete [Anaconda](https://anaconda.org/anaconda/python) distribution. 
 - [Jupyter notebook](http://jupyter.org/). You will need this in order to follow some of the in-class tutorials.
 - [Pytorch](https://pytorch.org/). This is the sophisticated machine learning and deep learning  package written in Python. Much of the latest machine learning research is done and published using PyTorch code.
-- [scikit-learn](https://scikit-learn.org/stable/) Scikit-learn is an open source machine learning library that supports supervised and unsupervised learning. It also provides various tools for model fitting, data preprocessing, model selection, model evaluation, and many other utilities.  Built on NumPy, SciPy, and matplotlib.
-- [R](https://cran.r-project.org/) R is a freely available language and environment for statistical computing and graphics which provides a wide variety of statistical and graphical techniques: linear and nonlinear modelling, statistical tests, time series analysis, classification, clustering, etc.
+- [scikit-learn](https://scikit-learn.org/stable/). Scikit-learn is an open source machine learning library that supports supervised and unsupervised learning. It also provides various tools for model fitting, data preprocessing, model selection, model evaluation, and many other utilities.  Built on NumPy, SciPy, and matplotlib.
+- [R](https://cran.r-project.org/). R is a freely available language and environment for statistical computing and graphics which provides a wide variety of statistical and graphical techniques: linear and nonlinear modelling, statistical tests, time series analysis, classification, clustering, etc.
 
 
 ### Lecturer
