@@ -1,7 +1,7 @@
 # CSU-IMU-2023
  Basic and advanced courses on Machine learning and Data Assimilation
  
- Here you will find all the material for 2 courses that will be held at Caraga State Universit in October 2023. Partial funding was provied by the [IMU](https://www.mathunion.org/cdc/lecturing/volunteer-lecturer-program)'s volunteer lecturer program.
+ Here you will find all the material for 2 courses that will be held at [Caraga State University](https://www.carsu.edu.ph/) in October 2023. Partial funding was provided by the [IMU](https://www.mathunion.org/cdc/lecturing/volunteer-lecturer-program)'s volunteer lecturer program.
  
  ## [Basic Course](01basic-course) (30h)
  
@@ -41,3 +41,11 @@
 [Mark Asch](https://markasch.github.io/DT-tbx-v1/) is an Emeritus Professor of Mathematics at the University of Picardy Jules Verne, in Amiens France.  His work spans a wide range of areas in computational science and engineering, and machine learning. Current research efforts include physics-informed machine learning, digital twins for green batteries, passive acoustic monitoring of endangered marine species.
 
 - Email: <mark.asch@u-picardie.fr>
+
+### Course Website
+
+Many more details, as well as links to the files in this github repository, can be found at:
+
+### [CSU2023](https://sites.google.com/view/csu2023/)
+
+
