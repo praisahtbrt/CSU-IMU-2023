@@ -3,7 +3,7 @@
  
  Here you will find all the material for 2 courses that will be held at Caraga State Universit in October 2023. The IMU provided partial funding.
  
- ## Basic Course (30h)
+ ## [Basic Course](01basic-course) (30h)
  
  In this course we present the basic theories of
  
