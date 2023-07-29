@@ -6,3 +6,11 @@
  - Computational Science
  
  In particular, we will be interested in how to use ML approaches to solve direct and inverse problems, including DA problems.
+ 
+ The [Basic Course](01basic-course) is a pre-requisite for this course.
+ 
+ 
+ ## Lectures
+ 
+ 
+ ## Examples
