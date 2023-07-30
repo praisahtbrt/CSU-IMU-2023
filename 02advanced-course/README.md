@@ -7,14 +7,10 @@
  
  In particular, we will be interested in how to use ML approaches to solve direct and inverse problems, including DA problems.
  
- The [Basic Course](01basic-course) is a pre-requisite for this course.
  
+### Notes
  
- Please consult the course website for all details and links:
+ 1. The [Basic Course](01basic-course) is a pre-requisite for this course.
+ 
+ 2. Please consult the [course website](https://sites.google.com/view/csu2023/) for all details and links:
 
-  
-<p style="text-align: center;">
-      
-### [CSU2023](https://sites.google.com/view/csu2023/)
- 
-</p>
