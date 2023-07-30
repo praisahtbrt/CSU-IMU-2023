@@ -2,15 +2,15 @@
  
  In this course we present more advanced material on *Scientific Machine Learning* that couples
  
- - Machine Learning
- - Computational Science
+ - Machine Learning,
+ - Computational Science.
  
  In particular, we will be interested in how to use ML approaches to solve direct and inverse problems, including DA problems.
  
  
-### Notes
+## Notes
  
  1. The [Basic Course](01basic-course) is a pre-requisite for this course.
  
- 2. Please consult the [course website](https://sites.google.com/view/csu2023/) for all details and links:
+ 2. Please consult the [course website](https://sites.google.com/view/csu2023/) for all details and links.
 
