@@ -10,9 +10,11 @@
  The [Basic Course](01basic-course) is a pre-requisite for this course.
  
  
- Please consult the course website for all details and links.
+ Please consult the course website for all details and links:
 
   
-  ### [CSU2023](https://sites.google.com/view/csu2023/)
+<p style="text-align: center;">
+      
+### [CSU2023](https://sites.google.com/view/csu2023/)
  
- 
+</p>
