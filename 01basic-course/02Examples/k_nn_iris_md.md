@@ -1,3 +1,5 @@
+# k-NN Classifier for IRIS Data
+
 We will fit a *k*-nn classifier to Fisher’s `iris` data. The Iris
 dataset contains measurements of sepal and petal lengths and widths for
 3 different species. Each row in the dataset contains the 4 measurements
