@@ -1,0 +1,96 @@
+---
+title: "Linear Regression for Photosynthesis Data"
+output:
+  md_document:
+    variant: markdown_github
+---
+
+# Linear Regression for Photosynthesis Data
+
+The file `photo.csv` contains data on the net maximal rate of photosynthesis of 198 plant species together with 4 other attributes related to their leaves. These are real, field data.
+
+The variables are:
+
+- Code: a code denoting the species
+- LeafType: type of leaf (sunleaf or whole plant) 
+- Amax: the net maximal rate of photosynthesis (A=assimilation) 
+- LDMC: concentration of dry matter in the leaf 
+- SLA: specific surface area of the leaf
+- LNC: concentration of organic nitrogen in the leaf 
+
+## Objective
+
+Perform a simple linear regression to predict the net rate of photosynthesis (Amax) given the specific leaf area (SLA). Of course, many other models are possible... 
+
+```{r}
+# Read in the  data
+photo <- read.csv("./photo.csv",header=T)
+# display variable names and first lines
+names(photo)
+head(photo)
+```
+
+We perform some basic EDA
+
+- a scatter plot of the explanatory and the response varible, colored by leaf type
+- histograms of the variables of interest
+
+
+```{r}
+library(ggplot2)
+ggplot(photo, aes(x=SLA, y=Amax, shape =LeafType, color=LeafType)) +
+       geom_point()
+ggplot(photo, aes(x=SLA)) +
+    geom_histogram(binwidth=5, fill="#69b3a2", color="#e9ecef", alpha=0.9) +
+    ggtitle("SLA")
+
+ggplot(photo, aes(x=Amax)) +
+    geom_histogram(binwidth=40, fill="red", color="#e9ecef", alpha=0.9) +
+    ggtitle("Amax")
+
+```
+
+There is a clearly a correlation between the two, with whole plants having higher values, in general..
+
+Summary statistics:
+
+```{r}
+# Summary overview of `photo`
+summary(photo) 
+```
+
+There are some missing values here, but they will be automatically treated by the linear regression.
+
+Let us perform an initial linear regression of Amax as a function of SLA, and inspect the results.
+
+```{r}
+lr1 <- lm(Amax ~ SLA, data=photo, na.action=na.omit)
+#par(mfrow=c(2,2))
+plot(lr1)
+summary(lr1)
+```
+## Analysis of model `lr1`
+
+As expected from the scatter plot, the results are not very satisfactory. In spite of highly significant coefficients, the R-squared value is low and the diagnostic plots show:
+
+1. A lack of homoscedasticity.
+2. A clear deviation of the residulas from a Gaussian distributioN
+
+This suggests that we try a nonlinear change of variables to better capture the biological phenomenon. 
+
+One possibility is to regress the logarithm of Amax on the logarithm of SLA. This intuition come from an allometric law that is known to describe many biological processes.
+
+```{r}
+# Fit an allometric relation
+#.    ln(y) = a + b*ln(x)
+lr2<-lm(log(Amax)~log(SLA),data=photo,na.action=na.omit)
+plot(lr2)
+summary(lr2)
+```
+
+## Conclusions
+
+- The allometric relation has improved the model.
+- The value of R-squared has increased from 0.6135 to 0.7266
+- The residuals are more homogeneously distributed.
+
