@@ -3,7 +3,7 @@
 ## Machine Learning
 
 - Basics
-   - Learn GGPLOT fundamentals $\rightarrow$ [Rmd](learn/learn_GGPLOT.Rmd), [html](learn/learn_GGPLOT.html)
+   - Learn GGPLOT fundamentals $\rightarrow$ [Rmd](./learn/learn_GGPLOT.Rmd), [html](./learn/learn_GGPLOT.html)
    - Learn R data structures $\rightarrow$ [Rmd](learn/R-data-struct.Rmd), [html]learn/(R-data-struct.html)
    - Learn basic EDA and Notebooks in R $\rightarrow$ [pdf](learn/learn_NB_EDA.pdf)
 - Exploratory Data Analysis
