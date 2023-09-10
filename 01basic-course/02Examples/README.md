@@ -24,7 +24,12 @@
         - R version $\rightarrow$ [Rmd](02Examples/k_means/k_means_simple.Rmd), [markdown](02Examples/k_means/k_means_simple.md), [html](02Examples/k_means/k_means_simple.html)
 		- Python version $\rightarrow$ [notebook](02Examples/k_means/k_means_skl.ipynb), [markdown](02Examples/k_means/k_means_skl/k_means_skl.md), [html](02Examples/k_means/k_means_skl.html)
 
-
+- Cross-validation and Tuning
+   - Comparison of CV methods with `caret`
+   - Tuning of k-nn model with `iris` data
+   - Model selection based on SVM with `iris` data 
+   - Tuning a NN using `caret` on `iris`data 
+   - CV and tuning with python (`sklearn`)
 
 
 
