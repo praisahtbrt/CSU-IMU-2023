@@ -34,3 +34,12 @@
 
 
 ## Data Assimilation
+
+### Variational DA
+
+Variational DA, based on adjoint methods, is complicated to code. We recommend to rather use the reliable open-source code repositories that er referenced in the DA [Lecture](https://github.com/markasch/CSU-IMU-2023/blob/main/01basic-course/01Lectures/12_DA_var.pdf).
+
+
+### Statistical DA
+
+Statistical DA is less complex to code, in particular in the form of simple Kalman Filters. Extensions of the KF will be studied in the [Advanced Course](https://sites.google.com/view/csu2023/advanced-course), which should be consulted for more details and examples.
