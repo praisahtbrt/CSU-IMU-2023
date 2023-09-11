@@ -2,7 +2,7 @@
 
 ## Machine Learning
 
-- Basics
+- [Basics](02Examples/learn)
    - Learn GGPLOT fundamentals $\rightarrow$ [Rmd](02Examples/learn/learn_GGPLOT.Rmd), [html](02Examples/learn/learn_GGPLOT.html)
    - Learn R data structures $\rightarrow$ [Rmd](02Examples/learn/R-data-struct.Rmd), [html](02Examples/learn/R-data-struct.html)
    - Learn basic EDA and Notebooks in R $\rightarrow$ [pdf](02Examples/learn/learn_NB_EDA.pdf)
@@ -25,11 +25,11 @@
 		- Python version $\rightarrow$ [notebook](02Examples/k_means/k_means_skl.ipynb), [markdown](02Examples/k_means/k_means_skl/k_means_skl.md), [html](02Examples/k_means/k_means_skl.html)
 
 - Cross-validation and Tuning
-   - Comparison of CV methods with `caret`
-   - Tuning of k-nn model with `iris` data
-   - Model selection based on SVM with `iris` data 
-   - Tuning a NN using `caret` on `iris`data 
-   - CV and tuning with python (`sklearn`)
+   - Comparison of CV methods with `caret` $\rightarrow$ [Rmd](02Examples/CV/CV_caret.Rmd), [html](02Examples/CV/CV_caret.html), [markdown](02Examples/CV/CV_caret.md)
+   - Tuning of k-nn model with `iris` data $\rightarrow$ [R](02Examples/CV/CV_k_nn_iris.R), [html](02Examples/CV/CV_k_nn_iris.html)
+   - Model selection and tuniing using SVM on `iris` data $\rightarrow$ [Rmd](02Examples/CV/TUNE_svm_iris.Rmd), [html](02Examples/CV/TUNE_svm_iris.html), [markdown](02Examples/CV/TUNE_svm_iris.md)
+   - [Tuning a NN](02Examples/CV/TUNE_nn_class_caret) using `caret` on `iris` data  $\rightarrow$ see the linked folder for data and all files.
+   - CV and tuning with python (`sklearn`) $\rightarrow$ [notebook](02Examples/CV/CV_RF_sklearn.ipynb), [html](02Examples/CV/CV_RF_sklearn.html), [markdown](02Examples/CV/CV_RF_sklearn.md)
 
 
 
