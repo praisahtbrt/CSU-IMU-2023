@@ -37,7 +37,7 @@
 
 ### Variational DA
 
-Variational DA, based on adjoint methods, is complicated to code. We recommend to rather use the reliable open-source code repositories that er referenced in the DA [Lecture](https://github.com/markasch/CSU-IMU-2023/blob/main/01basic-course/01Lectures/12_DA_var.pdf).
+Variational DA, based on adjoint methods, is complicated to code. We recommend to rather use the reliable open-source code repositories that are referenced in the DA [Lecture](https://github.com/markasch/CSU-IMU-2023/blob/main/01basic-course/01Lectures/12_DA_var.pdf).
 
 
 ### Statistical DA
