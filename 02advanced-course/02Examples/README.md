@@ -30,8 +30,8 @@ In the sections below, the reader will find PyTorch implementations of:
 
 
 - Introduction to differentiable programming $\rightarrow$ [notebook](02Examples/ad/diff_prog.ipynb), [markdown](02Examples/ad/diff_prog/diff_prog.md), [html](02Examples/ad/diff_prog.html), [pdf](02Examples/ad/diff_prog.pdf)
-- Simple linear regression with `autograd`  $\rightarrow$ [notebook](02Examples/ad/autograd_lin_reg.ipynb),  [html](02Examples/ad/autograd_lin_reg.html), [pdf](02Examples/ad/autograd_linreg.pdf)
-- `autograd` tutorial  $\rightarrow$ [notebook](02Examples/ad/autograd_tut.ipynb), [markdown](02Examples/ad/autograd_tut/autograd_tut.md), [html](02Examples/ad/autograd_tut.html), [pdf](02Examples/ad/autograd_tut.pdf)
+- Simple linear regression with `autograd`  $\rightarrow$ [notebook](02Examples/ad/autograd_lin_reg.ipynb),  [html](02Examples/ad/autograd_lin_reg.html), [pdf](02Examples/ad/autograd_lin_reg.pdf)
+- `autograd` tutorial  $\rightarrow$ [notebook](02Examples/ad/autograd_tut.ipynb), [markdown](02Examples/ad/autograd_tut/autograd_tut.md), [html](02Examples/ad/autograd_tut.html)
 
 ## Machine Learning for SciML
 
