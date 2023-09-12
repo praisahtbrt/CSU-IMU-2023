@@ -19,8 +19,9 @@ In the sections below, the reader will find PyTorch implementations of:
 ## Optimization and AD
 
 - Unconstrained optimization
-   - Comparison of gradient descent and stochastic gradient $\rightarrow$ [notebook](.ipynb), [html](.html)
-   - Comparison of different algorithms on a non-convex, 2D problem $\rightarrow$ [notebook](.ipynb), [html](.html)
+   - Comparison of gradient descent and stochastic gradient $\rightarrow$ [notebook](opt/GDvsSGD.ipynb), [html](opt/GDvsSGD.html)
+   - Comparison of different algorithms on a non-convex, 2D problem $\rightarrow$ [notebook](opt/opt_himmelblau.ipynb), [html](opt/opt_himmelblau.html), [pdf](opt/opt_himmelblau.pdf)
+   - Comparison of different initial guesses for a non-convex, 2D problem, with animation $\rightarrow$ [notebook](opt/opt_visu.ipynb), [html](opt/opt_visu.html),  [pdf](opt/opt_visu.pdf)
 
 
 - Constrained optimization 
@@ -28,9 +29,9 @@ In the sections below, the reader will find PyTorch implementations of:
    - Quadratic function with inequality constraint using Scipy's `minimize` function $\rightarrow$ [notebook](.ipynb), [markdown](.md), [html](.html)
 
 
-- Introduction to differentiable programming $\rightarrow$ [notebook](.ipynb), [markdown](.md), [html](.html)
-- Simple linear regression with `autograd`  $\rightarrow$ [notebook](.ipynb), [markdown](.md), [html](.html)
-- `autograd`tutorial  $\rightarrow$ [notebook](.ipynb), [markdown](.md), [html](.html)
+- Introduction to differentiable programming $\rightarrow$ [notebook](ad/diff_prog.ipynb), [markdown](ad/diff_prog/diff_prog.md), [html](ad/diff_prog.html), [pdf](ad/diff_prog.pdf)
+- Simple linear regression with `autograd`  $\rightarrow$ [notebook](autograd_lin_reg.ipynb),  [html](autograd_lin_reg.html), [pdf](ad/autograd_linreg.pdf)
+- `autograd` tutorial  $\rightarrow$ [notebook](ad/autograd_tut.ipynb), [markdown](ad/autograd_tut/autograd_tut.md), [html](ad/autograd_tut.html), [pdf](ad/autograd_tut.pdf)
 
 ## Machine Learning for SciML
 
