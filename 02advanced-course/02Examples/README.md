@@ -19,19 +19,19 @@ In the sections below, the reader will find PyTorch implementations of:
 ## Optimization and AD
 
 - Unconstrained optimization
-   - Comparison of gradient descent and stochastic gradient $\rightarrow$ [notebook](opt/GDvsSGD.ipynb), [html](opt/GDvsSGD.html)
-   - Comparison of different algorithms on a non-convex, 2D problem $\rightarrow$ [notebook](opt/opt_himmelblau.ipynb), [html](opt/opt_himmelblau.html), [pdf](opt/opt_himmelblau.pdf)
-   - Comparison of different initial guesses for a non-convex, 2D problem, with animation $\rightarrow$ [notebook](opt/opt_visu.ipynb), [html](opt/opt_visu.html),  [pdf](opt/opt_visu.pdf)
+   - Comparison of gradient descent and stochastic gradient $\rightarrow$ [notebook](02Examples/opt/GDvsSGD.ipynb), [html](02Examples/opt/GDvsSGD.html)
+   - Comparison of different algorithms on a non-convex, 2D problem $\rightarrow$ [notebook](02Examples/opt/opt_himmelblau.ipynb), [html](02Examples/opt/opt_himmelblau.html), [pdf](02Examples/opt/opt_himmelblau.pdf)
+   - Comparison of different initial guesses for a non-convex, 2D problem, with animation $\rightarrow$ [notebook](02Examples/opt/opt_visu.ipynb), [html](02Examples/opt/opt_visu.html),  [pdf](02Examples/opt/opt_visu.pdf)
 
 
 - Constrained optimization 
-   - Quadratic function with equality constraint using Scipy's `minimize` function $\rightarrow$ [notebook](.ipynb), [markdown](.md), [html](.html)
-   - Quadratic function with inequality constraint using Scipy's `minimize` function $\rightarrow$ [notebook](.ipynb), [markdown](.md), [html](.html)
+   - Quadratic function with equality constraint using Scipy's `minimize` function $\rightarrow$ [notebook](02Examples/opt/Constrained_opt.ipynb), [markdown](02Examples/opt/Constrained_opt/Constrained_opt.md), [html](02Examples/opt/Constrained_opt.html)
+   - Quadratic function with inequality constraint using Scipy's `minimize` function $\rightarrow$ [notebook](02Examples/opt/Constrained_inequality.ipynb), [markdown](02Examples/opt/Constrained_inequality/Constrained_inequality.md), [html](02Examples/opt/Constrained_inequality.html)
 
 
-- Introduction to differentiable programming $\rightarrow$ [notebook](ad/diff_prog.ipynb), [markdown](ad/diff_prog/diff_prog.md), [html](ad/diff_prog.html), [pdf](ad/diff_prog.pdf)
-- Simple linear regression with `autograd`  $\rightarrow$ [notebook](autograd_lin_reg.ipynb),  [html](autograd_lin_reg.html), [pdf](ad/autograd_linreg.pdf)
-- `autograd` tutorial  $\rightarrow$ [notebook](ad/autograd_tut.ipynb), [markdown](ad/autograd_tut/autograd_tut.md), [html](ad/autograd_tut.html), [pdf](ad/autograd_tut.pdf)
+- Introduction to differentiable programming $\rightarrow$ [notebook](02Examples/ad/diff_prog.ipynb), [markdown](02Examples/ad/diff_prog/diff_prog.md), [html](02Examples/ad/diff_prog.html), [pdf](02Examples/ad/diff_prog.pdf)
+- Simple linear regression with `autograd`  $\rightarrow$ [notebook](02Examples/ad/autograd_lin_reg.ipynb),  [html](02Examples/ad/autograd_lin_reg.html), [pdf](02Examples/ad/autograd_linreg.pdf)
+- `autograd` tutorial  $\rightarrow$ [notebook](02Examples/ad/autograd_tut.ipynb), [markdown](02Examples/ad/autograd_tut/autograd_tut.md), [html](02Examples/ad/autograd_tut.html), [pdf](02Examples/ad/autograd_tut.pdf)
 
 ## Machine Learning for SciML
 
