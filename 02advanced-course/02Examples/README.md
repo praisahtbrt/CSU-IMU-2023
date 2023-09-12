@@ -5,8 +5,8 @@
 
 There are many tutorials and examples available for learning PyTorch. 
 
-- Basics 
-- Neural network basics and ML workflows
+- Basics $\rightarrow$ [notebook](02Examples/pytorch/pytorch_101.ipynb), [html](02Examples/pytorch/pytorch_101.html), [markdown](02Examples/pytorch/pytorch_101.md)
+- Neural network basics and ML workflows $\rightarrow$ [notebook](02Examples/pytorch/pytorch_102.ipynb), [html](02Examples/pytorch/pytorch_102.html), [markdown](02Examples/pytorch/pytorch_102/pytorch_102.md)
 
 
 In the sections below, the reader will find PyTorch implementations of: 
