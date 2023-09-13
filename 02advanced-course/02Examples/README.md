@@ -40,9 +40,9 @@ In the sections below, the reader will find PyTorch implementations of:
 
 ## Machine Learning for SciML
 
-- Linear regression tutorial with PyTorch, numpy and sklearn comparisons \rightarrow$ [notebook](02Examples/linreg/torch_linreg_tutorial.ipynb), [markdown](02Examples/linreg/torch_linreg_tutorial/torch_linreg_tutorial.md), [html](02Examples/linreg/torch_linreg_tutorial.html)
+- Linear regression tutorial with PyTorch, numpy and sklearn comparisons $\rightarrow$ [notebook](02Examples/linreg/torch_linreg_tutorial.ipynb), [markdown](02Examples/linreg/torch_linreg_tutorial/torch_linreg_tutorial.md), [html](02Examples/linreg/torch_linreg_tutorial.html)
 
-- Simple NN classification with Pytorch \rightarrow$ [notebook](02Examples/ml/torch_NN_class_simple.ipynb), [markdown](02Examples/ml/torch_NN_class_simple/.md), [html](02Examples/ml/torch_NN_class_simple.html)
+- Simple NN classification with Pytorch $\rightarrow$ [notebook](02Examples/ml/torch_NN_class_simple.ipynb), [markdown](02Examples/ml/torch_NN_class_simple/.md), [html](02Examples/ml/torch_NN_class_simple.html)
 
 - NN classification on diabetes data
 
