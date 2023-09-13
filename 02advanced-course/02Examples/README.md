@@ -12,7 +12,7 @@ There are many tutorials and examples available for learning PyTorch. Here are s
 
 In the sections below, the reader will find PyTorch implementations of: 
 
-- optimization
+- Optimization
 - Machine Learning
 - SciML
 
@@ -24,7 +24,9 @@ In the sections below, the reader will find PyTorch implementations of:
    - Comparison of different algorithms on a non-convex, 2D problem $\rightarrow$ [notebook](02Examples/opt/opt_himmelblau.ipynb), [html](02Examples/opt/opt_himmelblau.html), [pdf](02Examples/opt/opt_himmelblau.pdf)
    - Comparison of different initial guesses for a non-convex, 2D problem, with animation $\rightarrow$ [notebook](02Examples/opt/opt_visu.ipynb), [html](02Examples/opt/opt_visu.html),  [pdf](02Examples/opt/opt_visu.pdf)
    - PyTorch for 1D optimization problems $\rightarrow$ [notebook](02Examples/opt/torch-opt-simplest.ipynb), [html](02Examples/opt/torch-opt-simplest.html),  [pdf](02Examples/opt/torch-opt-simplest.pdf)
-   - Pytorch detailed comparison and diagnostics of SGD and LBFGS methods $\rightarrow$ [notebook](02Examples/opt/ttorch_lbfgs_convergence.ipynb), [html](02Examples/opt/torch_lbfgs_convergence.html),  [pdf](02Examples/opt/torch_lbfgs_convergence.pdf)
+   - Pytorch detailed comparison and diagnostics of SGD and LBFGS methods $\rightarrow$ [notebook](02Examples/opt/torch_lbfgs_convergence.ipynb), [html](02Examples/opt/torch_lbfgs_convergence.html),  [pdf](02Examples/opt/torch_lbfgs_convergence.pdf)
+   - Pytorch linear regression curve fitting by least-squares minimization $\rightarrow$ [notebook](02Examples/opt/torch_linreg_basic.ipynb), [html](02Examples/opt/ttorch_linreg_basic.html),  [pdf](02Examples/opt/torch_linreg_basic.pdf)
+   - Pytorch exponential curve fitting by least-squares minimization using Adam $\rightarrow$ [notebook](02Examples/opt/torch_curve_fitting.ipynb), [html](02Examples/opt/torch_curve_fitting.html),  [pdf](02Examples/opt/torch_curve_fitting.pdf)
 
 
 - Constrained optimization 
@@ -38,7 +40,15 @@ In the sections below, the reader will find PyTorch implementations of:
 
 ## Machine Learning for SciML
 
-- Linear regression (PyTorch)
+- Linear regression tutorial with PyTorch, numpy and sklearn comparisons \rightarrow$ [notebook](02Examples/linreg/torch_linreg_tutorial.ipynb), [markdown](02Examples/linreg/torch_linreg_tutorial/torch_linreg_tutorial.md), [html](02Examples/linreg/torch_linreg_tutorial.html)
+
+- Simple NN classification with Pytorch \rightarrow$ [notebook](02Examples/ml/torch_NN_class_simple.ipynb), [markdown](02Examples/ml/torch_NN_class_simple/.md), [html](02Examples/ml/torch_NN_class_simple.html)
+
+- NN classification on diabetes data
+
+- NN regression on socio-economic housing data
+
+
 
 - Cross-validation and Tuning
    - Precision-Recall curve for heart disease data  $\rightarrow$ [notebook](02Examples/ml/ML_prec_recall.ipynb), [markdown](02Examples/ml/ML_prec_recall/ML_prec_recall/ML_prec_recall.md), [html](02Examples/ml/ML_prec_recall.html)
@@ -47,6 +57,10 @@ In the sections below, the reader will find PyTorch implementations of:
 
 ## SciML
 
+- Learn a stepwise function 
+- Learn a sine function
+- Constant parameter identification in a (P)DE
+- Function identification in a (P)DE
 - PINN for harmonic oscillator
 
 
