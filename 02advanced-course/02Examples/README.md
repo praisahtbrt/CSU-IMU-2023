@@ -65,11 +65,13 @@ In the sections below, the reader will find PyTorch implementations of:
 - Constant parameter identification inverse problem for a (P)DE  $\rightarrow$ [notebook](02Examples/PINN/PCL_1D_param_const.ipynb), [markdown](02Examples/PINN/PCL_1D_param_const/PCL_1D_param_const.md), [html](02Examples/PINN/PCL_1D_param_const.html), [pdf](02Examples/PINN/PCL_1D_param_const.pdf)
 
 
-- Function identification in a (P)DE
+- Function identification in a (P)DE - coming soon...
 
-- PINN for harmonic oscillator
+- PINN for harmonic oscillator  $\rightarrow$ [notebook](02Examples/PINN/PINN_harmonic.ipynb), [markdown](02Examples/PINN/PINN_harmonic/PINN_harmonic.md), [html](02Examples/PINN/PINN_harmonic.html), [pdf](02Examples/PINN/PINN_harmonic.pdf)
+
 
 - DeepXDE examples
+
 
 ## Data Assimilation
 
