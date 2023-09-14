@@ -80,11 +80,17 @@ In the sections below, the reader will find PyTorch implementations of:
 
 Variational DA, based on adjoint methods, is complicated to code. We recommend to rather use the reliable open-source code repositories that are referenced in the DA [Lecture](https://github.com/markasch/CSU-IMU-2023/blob/main/01basic-course/01Lectures/12_DA_var.pdf).
 
+- 3D Var for Lorenz63 system $\rightarrow$ [notebook](02Examples/DA/threeDVar_l63.ipynb), [markdown](02Examples/DA/threeDVar/threeDVar.md), [html](02Examples/DA/threeDVar.html)
+
 
 ### Statistical DA
 
 Statistical DA is less complex to code, in particular in the form of simple Kalman Filters. Extensions of the KF are studied in the [Advanced Course](https://sites.google.com/view/csu2023/advanced-course), which should be consulted for more details and examples.
 
+- Kalman Filter for a scalar, Gaussian random walk  $\rightarrow$ [notebook](02Examples/DA/kf_gaussRW.ipynb), [markdown](02Examples/DA/kf_gaussRW/kf_gaussRW.md), [html](02Examples/DA/kf_gaussRW.html)
+
 - Ensemble Kalman Filter for Lorenz63 system  $\rightarrow$ [notebook](02Examples/DA/enkf_l63.ipynb), [markdown](02Examples/DA/enkf_l63/enkf_l63.md), [html](02Examples/DA/enkf_l63.html)
+
+
 
 

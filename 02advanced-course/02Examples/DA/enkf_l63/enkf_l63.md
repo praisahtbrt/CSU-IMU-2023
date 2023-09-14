@@ -10,6 +10,7 @@ $$
 \end{align}
 $$
 
+
 where $x=x(t),$ $y=y(t)$, $z=z(t)$ and $\sigma$ (ratio of kinematic viscosity divided by thermal diffusivity),
 $\rho$ (measure of stability) and  $\beta$ (related to the wave number) are parameters. Chaotic behavior is obtained when the parameters are chosen as
 
@@ -213,7 +214,11 @@ plt.savefig('L63_EnKF.eps', dpi = 500, bbox_inches = 'tight')
 
 ## Conclusions
 
-The EnKF does a remarkable job, and there is no evidence of filter divergence in spite of the ill-posedness of the dynamic system. We begin to see a slight phase shift in the forecast, starting around $t=8.$ Usually, by this time, we will have new observations and the forecast can then be reinitialized and updated.  This example was adapted from the original in Ahmed2020.
+1. The EnKF does a remarkable job, and there is no evidence of filter divergence in spite of the ill-posedness of the dynamic system. We begin to see a slight phase shift in the forecast, starting around $t=8.$ Usually, by this time, we will have new observations and the forecast can then be reinitialized and updated.  This example was adapted from the original in Ahmed2020.
+
+2. Ensemble methods have gained significant popularity because of their simple conceptual formulation and relative ease of implementation. No optimization problem is required to be solved. They are considered non-intrusive in the sense that current solvers can be easily incorporated with minimal modification, as there is no need to derive model Jacobians or adjoint equations.
+
+3. Despite the sound mathematical and theoretical foundation of standard Kalman filters (both linear and nonlinear cases), they are not widely utilized in geophysical sciences. The major bottleneck in the computational pipeline of Kalman filtering is the update of background covariance matrix. In typical implementation, the cost of this step is $O(n^3),$ where $n$ is the size of the state vector. Though still manageable for systems of ODEs, hhis becomes prohibitive for PDE systems, usually having dimensions of $10^6$ to $10^9$ unknowns.
 
 
 ```python
