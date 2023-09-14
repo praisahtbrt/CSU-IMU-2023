@@ -91,6 +91,11 @@ Statistical DA is less complex to code, in particular in the form of simple Kalm
 
 - Ensemble Kalman Filter for Lorenz63 system  $\rightarrow$ [notebook](02Examples/DA/enkf_l63.ipynb), [markdown](02Examples/DA/enkf_l63/enkf_l63.md), [html](02Examples/DA/enkf_l63.html)
 
+- Kalman Filter and Extended Kalman Filter for a noisy pendulum with tracking of the position $\rightarrow$ [notebook](02Examples/DA/kf_ekf_pendulum.ipynb), [markdown](02Examples/DA/kf_ekf_pendulum/kf_ekf_pendulum.md), [html](02Examples/DA/kf_ekf_pendulum.html), [pdf] (02Examples/DA/kf_ekf_pendulum.pdf)
+
+- Extended Kalman Filter for a noisy pendulum with tracking of both position and velocity  $\rightarrow$ [notebook](02Examples/DA/ekf_2D_pendulum.ipynb), [markdown](02Examples/DA/ekf_2D_pendulum/ekf_2D_pendulum.md), [html](02Examples/DA/ekf_2D_pendulum.html), [pdf] (02Examples/DA/ekf_2D_pendulum.pdf)
+
+
 
 
 
