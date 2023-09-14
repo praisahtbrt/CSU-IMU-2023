@@ -48,7 +48,7 @@ In the sections below, the reader will find PyTorch implementations of:
 - NN regression on socio-economic housing data $\rightarrow$ [notebook](02Examples/ml/pytorch_NN_reg.ipynb), [markdown](02Examples/ml/pytorch_NN_reg/pytorch_NN_reg/.md), [html](02Examples/ml/pytorch_NN_reg.html)
 
 
-- NN classification on diabetes data
+- NN classification on diabetes data data $\rightarrow$ [notebook](02Examples/ml/pytorch_NN_classif.ipynb), [markdown](02Examples/ml/pytorch_NN_classif.md), [html](02Examples/ml/pytorch_NN_classif.html), [pdf](02Examples/ml/pytorch_NN_classif.pdf)
 
 
 - Cross-validation and Tuning
