@@ -58,12 +58,18 @@ In the sections below, the reader will find PyTorch implementations of:
 
 ## SciML
 
-- Learn a stepwise function 
-- Learn a sine function
-- Constant parameter identification in a (P)DE
+- Learn a sine function $\rightarrow$ [notebook](02Examples/PINN/pytorch_NN_fct_approx.ipynb), [markdown](02Examples/PINN/pytorch_NN_fct_approx/pytorch_NN_fct_approx.md), [html](02Examples/PINN/pytorch_NN_fct_approx.html), [pdf](02Examples/PINN/pytorch_NN_fct_approx.pdf)
+
+- Learn a stepwise function $\rightarrow$ [notebook](02Examples/PINN/pytorch_NN_single_layer.ipynb), [markdown](02Examples/PINN/pytorch_NN_single_layer/pytorch_NN_single_layer.md), [html](02Examples/PINN/pytorch_NN_single_layer.html), [pdf](02Examples/PINN/pytorch_NN_single_layer.pdf)
+
+- Constant parameter identification inverse problem for a (P)DE  $\rightarrow$ [notebook](02Examples/PINN/PCL_1D_param_const.ipynb), [markdown](02Examples/PINN/PCL_1D_param_const/PCL_1D_param_const.md), [html](02Examples/PINN/PCL_1D_param_const.html), [pdf](02Examples/PINN/PCL_1D_param_const.pdf)
+
+
 - Function identification in a (P)DE
+
 - PINN for harmonic oscillator
 
+- DeepXDE examples
 
 ## Data Assimilation
 
