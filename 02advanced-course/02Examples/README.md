@@ -85,6 +85,6 @@ Variational DA, based on adjoint methods, is complicated to code. We recommend t
 
 Statistical DA is less complex to code, in particular in the form of simple Kalman Filters. Extensions of the KF are studied in the [Advanced Course](https://sites.google.com/view/csu2023/advanced-course), which should be consulted for more details and examples.
 
-- Ensemble Kalman Filter for Lorenz63 system  $\rightarrow$ [notebook](02Examples/DA/enkf_l63.ipynb), [markdown](02Examples/2Examples/DA/enkf_l63/enkf_l63.md), [html](02Examples/2Examples/DA/enkf_l63.html)
+- Ensemble Kalman Filter for Lorenz63 system  $\rightarrow$ [notebook](02Examples/DA/enkf_l63.ipynb), [markdown](02Examples/DA/enkf_l63/enkf_l63.md), [html](02Examples/DA/enkf_l63.html)
 
 
