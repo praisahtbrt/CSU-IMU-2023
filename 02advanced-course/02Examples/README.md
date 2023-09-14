@@ -7,7 +7,7 @@ There are many tutorials and examples available for learning PyTorch. Here are s
 
 - Basics $\rightarrow$ [notebook](02Examples/pytorch/pytorch_101.ipynb), [html](02Examples/pytorch/pytorch_101.html), [markdown](02Examples/pytorch/pytorch_101.md)
 - Neural network basics and ML workflows $\rightarrow$ [notebook](02Examples/pytorch/pytorch_102.ipynb), [html](02Examples/pytorch/pytorch_102.html), [markdown](02Examples/pytorch/pytorch_102/pytorch_102.md)
-- Use of GPUs in PyTorch \rightarrow$ [notebook](02Examples/pytorch/Torch_test_GPU_CPU.ipynb), [html](02Examples/pytorch/Torch_test_GPU_CPU.html), [markdown](02Examples/pytorch/Torch_test_GPU_CPU.md)
+- Use of GPUs in PyTorch $\rightarrow$ [notebook](02Examples/pytorch/Torch_test_GPU_CPU.ipynb), [html](02Examples/pytorch/Torch_test_GPU_CPU.html), [markdown](02Examples/pytorch/Torch_test_GPU_CPU.md)
 
 
 In the sections below, the reader will find PyTorch implementations of: 
