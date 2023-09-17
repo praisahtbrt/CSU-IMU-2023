@@ -70,7 +70,9 @@ In the sections below, the reader will find PyTorch implementations of:
 - PINN for harmonic oscillator  $\rightarrow$ [notebook](02Examples/PINN/PINN_harmonic.ipynb), [markdown](02Examples/PINN/PINN_harmonic/PINN_harmonic.md), [html](02Examples/PINN/PINN_harmonic.html), [pdf](02Examples/PINN/PINN_harmonic.pdf)
 
 
-- DeepXDE examples
+## DeepXDE examples
+
+- Learn a scalar sine function $\rightarrow$ [notebook](02Examples/DDE/dde_fct_learning.ipynb), [markdown](02Examples/DDE/DDE/dde_fct_learning/dde_fct_learning.md), [html](02Examples/DDE/dde_fct_learning.html), [pdf](02Examples/DDE/dde_fct_learning.pdf)
 
 
 ## Data Assimilation
