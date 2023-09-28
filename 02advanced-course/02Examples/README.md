@@ -80,6 +80,9 @@ In the sections below, the reader will find PyTorch implementations of:
 
 - Learn the solution to the Lotka-Volterra system of ODEs  $\rightarrow$ [notebook](02Examples/DDE/dde_LK.ipynb), [markdown](02Examples/DDE/dde_LK/dde_LK.md), [html](02Examples/DDE/dde_LK.html), [pdf](02Examples/DDE/dde_LK.pdf)
 
+- Learn the solution to the 1D Poisson equation with Dirichlet and Robin BCs  $\rightarrow$ [notebook](02Examples/DDE/dde_Poisson1D.ipynb), [markdown](02Examples/DDE/dde_Poisson1D/dde_Poisson1D.md), [html](02Examples/DDE/dde_Poisson1D.html), [pdf](02Examples/DDE/dde_Poisson1D.pdf)
+
+- Learn the solution to the 2D Poisson equation on an L-shaped domain  $\rightarrow$ [notebook](02Examples/DDE/dde_Poisson2D.ipynb), [markdown](02Examples/DDE/dde_Poisson2D/dde_Poisson2D.md), [html](02Examples/DDE/dde_Poisson2D.html), [pdf](02Examples/DDE/dde_Poisson2D.pdf)
 
 ## Data Assimilation
 
