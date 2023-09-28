@@ -72,7 +72,13 @@ In the sections below, the reader will find PyTorch implementations of:
 
 ## DeepXDE examples
 
-- Learn a scalar sine function $\rightarrow$ [notebook](02Examples/DDE/dde_fct_learning.ipynb), [markdown](02Examples/DDE/DDE/dde_fct_learning/dde_fct_learning.md), [html](02Examples/DDE/dde_fct_learning.html), [pdf](02Examples/DDE/dde_fct_learning.pdf)
+- Learn a scalar sine function $\rightarrow$ [notebook](02Examples/DDE/dde_fct_learning.ipynb), [markdown](02Examples/DDE/dde_fct_learning/dde_fct_learning.md), [html](02Examples/DDE/dde_fct_learning.html), [pdf](02Examples/DDE/dde_fct_learning.pdf)
+
+
+- Learn the solution to a very simple system of ODEs  $\rightarrow$ [notebook](02Examples/DDE/dde_simple.ipynb), [markdown](02Examples/DDE/dde_simple/dde_simple.md), [html](02Examples/DDE/dde_simple.html), [pdf](02Examples/DDE/dde_simple.pdf)
+
+
+- Learn the solution to the Lotka-Volterra system of ODEs  $\rightarrow$ [notebook](02Examples/DDE/dde_LK.ipynb), [markdown](02Examples/DDE/dde_LK/dde_LK.md), [html](02Examples/DDE/dde_LK.html), [pdf](02Examples/DDE/dde_LK.pdf)
 
 
 ## Data Assimilation
