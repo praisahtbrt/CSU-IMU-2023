@@ -56,6 +56,10 @@ In the sections below, the reader will find PyTorch implementations of:
    - see also the numerous Basic Course Examples
 
 
+## Surrogate Modeling (SUMO)
+
+- Multilinear regression with categorical variables for concrete strength data  $\rightarrow$ [notebook](02Examples/SUMO/mlreg_concrete.ipynb), [markdown](02Examples/ml/SUMO/mlreg_concrete/mlreg_concrete.md),
+
 ## SciML
 
 - Learn a sine function $\rightarrow$ [notebook](02Examples/PINN/pytorch_NN_fct_approx.ipynb), [markdown](02Examples/PINN/pytorch_NN_fct_approx/pytorch_NN_fct_approx.md), [html](02Examples/PINN/pytorch_NN_fct_approx.html), [pdf](02Examples/PINN/pytorch_NN_fct_approx.pdf)

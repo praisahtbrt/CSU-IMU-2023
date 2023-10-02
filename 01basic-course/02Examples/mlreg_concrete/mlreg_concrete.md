@@ -5,7 +5,9 @@
 Concrete is the most important material in civil engineering. The dataset has 9 attributes including 8 quantitative input variables, and 1 quantitative output variable.
 The dataset can be downloaded and viewed at: https://archive.ics.uci.edu/ml/datasets/concrete+compressive+strength 
 
-The compressive strength of concrete determines its quality, and is tested by a standard crushing test on a concrete cylinder. Concrete strength is also considered a key factor in obtaining the desired durability. But  testing for strength can take 28 days, which is very long. Our aim is to use  Machine Learning to reduce this effort and be able to predict the composition of raw materials for good compressive strength. This is an example of _Surrogate Modeling_, an important approach for combining Machine Learning with scientific research.
+The compressive strength of concrete determines its quality, and is tested by a standard crushing test on a concrete cylinder. Concrete strength is also considered a key factor in obtaining the desired durability. But  testing for strength can take 28 days, which is very long. 
+
+Our aim is to use  Machine Learning to reduce this effort and be able to predict the composition of raw materials for good compressive strength. This is an example of _Surrogate Modeling_, an important approach for combining Machine Learning with scientific research.
 
 The features are:
 
@@ -14,14 +16,14 @@ The features are:
 - Fly ash: coal combustion product that is composed of the particulates that are driven out of coal-fired boilers together with the flue gases.
 - Water: used to form a thick paste.
 - Superplasticizer: used in making high-strength concrete.
-- Coaseseaggregate: prices of rocks obtained from ground deposits.
+- Coarse eaggregate: pieces of rocks obtained from ground deposits.
 - Fine aggregate: the size of aggregate smaller than 4.75mm.
-- Age: Rate of gain of strength is faster to start with and the rate gets reduced with age. csMPa: Measurement unit of concrete strength. This variable, present in the original dataste, is not used here.
-- Air entrainement: a categorical variable, signalling the use of air entraienment, known to have a beneficial effect in resisting the damage caused to concrete by the freezing/thawing cycles, but a negative effect on the compressive strength of concrete.
+- Age: Rate of gain of strength is faster to start with and the rate gets reduced with age. 
+- Air entrainement: a categorical variable, signalling the use of air entrainment, known to have a beneficial effect in resisting the damage caused to concrete by the freezing/thawing cycles, but a negative effect on the compressive strength of concrete.
 
 The output is:
 
-- Concrete compressive strength: a value in MPa
+- Strength: Concrete compressive strength; a value in MPa
 
 ## Simple Linear Regression
 
@@ -159,8 +161,9 @@ where $Y$ is the value of the response variable and $X_i$ is the value of the ex
 If we think about this equation in matrix terms, we see that _Y_ is a 1-dimensional matrix: it is just a single column (or array or vector) of numbers.  In our case, this vector corresponds to the compressive strength of different batches of concrete measured in megapascals.  The right-hand side of the equation is actually a 2-dimensional matrix: there is one column for our _X_ variable and another column for the constant. 
 
 Creating a linear regression model in Statsmodels requires the following steps:
+
 1. Import the Statsmodels library
-2. Define _Y_ and _X_ matrices.  This is optional, but it keeps the `OLS()` call easier to read
+2. Define _Y_ and _X_ matrices.  This is optional, but it makes the `OLS()` call easier to read
 3. Add a constant column to the _X_ matrix
 4. Call `OLS()` to define the model
 5. Call `fit()` to actually estimate the model parameters using the data set (fit the line)
@@ -257,7 +260,7 @@ X.head()
 
 
 
-Notice the difference: the _X_ matrix has been augmented with a column of 1s called "const".  To see why, recall the point of linear regression: to use data to "learn" the parameters of the best-fit line and use the parameters to make predictions.  The parameters of a line are its _y_-intercept and slope.  Once we have the _y_-intercept and slope ($\beta_0$ and $\beta_1$ in the equation above or _b_ and _m_ in grade 9 math), we can multiply them by the data in the _X_ matrix to get a prediction for _Y_.
+Notice the difference: the _X_ matrix has been augmented with a column of 1's called "const".  To see why, recall the point of linear regression: to use data to "learn" the parameters of the best-fit line and use the parameters to make predictions.  The parameters of a line are its _y_-intercept and slope.  Once we have the _y_-intercept and slope ($\beta_0$ and $\beta_1$ in the equation above or _b_ and _m_ in high school math), we can multiply them by the data in the _X_ matrix to get a prediction for _Y_.
 
 Written out in words for the first row of our data, we get:
 
@@ -344,7 +347,7 @@ This output look very similar to what we have seen before.
 <div>
 
 ## Regression diagnostics
-Like R, Statsmodels exposes the residuals.  That is, keeps an array containing the difference between the observed values _Y_ and the values predicted by the linear model.  A fundamental assumption is that the residuals (or "errors") are random: some big, some some small, some positive, some negative, but overall the errors should be normally distributed with mean zero.  Anything other than normally distributed residuals indicates a serious problem with the linear model.
+Like R, Statsmodels exposes the residuals.  That is, keeps an array containing the difference between the observed values _Y_ and the values predicted by the linear model.  A fundamental assumption is that the residuals (or "errors") are random: some big, some  small, some positive, some negative, but overall the errors should be normally distributed with mean zero.  Anything other than normally distributed residuals indicates a serious problem with the linear model.
 
 ## Histogram of residuals
 
@@ -1902,11 +1905,11 @@ plt.show()
 
 
 ## Standardized regression coefficients
-S
-tandardized regression coefficients provide an easy way to estimate effect size that is independent of units.
+
+Standardized regression coefficients provide an easy way to estimate effect size that is independent of units.
 
 Although extracting standardized coefficients is farily easy in R, we have to be a bit more explicit in Python:
-1. Transform the _Y_ and each column of the _X_ matrices into standardize values (_z_-scores) with mean = 0 and standard deviation = 1.0.
+1. Transform the _Y_ and each column of the _X_ matrices into standardized values (_z_-scores) with mean = 0 and standard deviation = 1.0.
 2. Run the regression with the standardized inputs.  This provides standardized regression coefficients
 3. Extract and display the standardized coefficient
 
