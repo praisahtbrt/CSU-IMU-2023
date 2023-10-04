@@ -58,7 +58,9 @@ In the sections below, the reader will find PyTorch implementations of:
 
 ## Surrogate Modeling (SUMO)
 
-- Multilinear regression with categorical variables for concrete strength data  $\rightarrow$ [notebook](02Examples/SUMO/mlreg_concrete.ipynb), [markdown](02Examples/ml/SUMO/mlreg_concrete/mlreg_concrete.md)
+- Linear regression for cyclical features $\rightarrow$ [notebook](02Examples/SUMO/cyclic_data.ipynb), [markdown](02Examples/SUMO/cyclic_data/cyclic_data.md)
+
+- Multilinear regression with categorical variables for concrete strength data  $\rightarrow$ [notebook](02Examples/SUMO/mlreg_concrete.ipynb), [markdown](02Examples/SUMO/mlreg_concrete/mlreg_concrete.md)
 
 - Nonlinear regression using SVM for LIDAR data [markdown](https://github.com/markasch/CSU-IMU-2023/blob/main/01basic-course/02Examples/svm_reg/svm_reg.md) [Rmd](https://github.com/markasch/CSU-IMU-2023/blob/main/01basic-course/02Examples/svm_reg/svm_reg.Rmd) 
 
