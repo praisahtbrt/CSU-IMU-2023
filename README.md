@@ -49,3 +49,13 @@ Many more details, as well as links to the files in this github repository, can 
 ### [CSU2023](https://sites.google.com/view/csu2023/)
 
 
+### LICENSES
+
+- All text documents and lectures are licensed under CC-BY 4.0
+- All code examples are licensed under the MIT License
+
+This is specified in the corresponding directories.
+
+
+
+
