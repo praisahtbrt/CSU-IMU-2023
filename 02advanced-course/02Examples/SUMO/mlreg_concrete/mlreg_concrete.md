@@ -341,12 +341,14 @@ model_result.summary()
 
 This output look very similar to what we have seen before.
 
-<div class="alert alert-block alert-info">
-    <B>Note:</B>
-    There is missing data here, so the <CODE>missing='drop'</CODE> argument above is required.  Missing data is a fact of life in most data sets. The simplest way to handle it in linear regression is simply to censor (drop) all rows with missing data from the linear regression procedure.  This is what has been done above.
-<div>
+Note:
+
+There is missing data here, so the missing='drop' argument above is required.  Missing data is a fact of life in most data sets. The simplest way to handle it in linear regression is simply to censor (drop) all rows with missing data from the linear regression procedure.  This is what has been done above.
+
+
 
 ## Regression diagnostics
+
 Like R, Statsmodels exposes the residuals.  That is, keeps an array containing the difference between the observed values _Y_ and the values predicted by the linear model.  A fundamental assumption is that the residuals (or "errors") are random: some big, some  small, some positive, some negative, but overall the errors should be normally distributed with mean zero.  Anything other than normally distributed residuals indicates a serious problem with the linear model.
 
 ## Histogram of residuals
