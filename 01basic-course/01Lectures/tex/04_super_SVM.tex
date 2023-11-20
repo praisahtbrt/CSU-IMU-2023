@@ -1,0 +1,450 @@
+%% LyX 2.4.0~beta5 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{foils}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\pagestyle{foilheadings}
+\setcounter{secnumdepth}{1}
+\setcounter{tocdepth}{1}
+\usepackage{color}
+\usepackage{pifont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{graphicx}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\newcommand{\noun}[1]{\textsc{#1}}
+%% A simple dot to overcome graphicx limitations
+\newcommand{\lyxdot}{.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{definition}
+\newtheorem{defn}{\protect\definitionname}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{xcolor}
+\renewcommand{\labelitemi}{$\textcolor{blue}{\bullet}$}
+\renewcommand{\labelitemii}{$\textcolor{teal}{\Rightarrow}$}
+\renewcommand{\labelitemiii}{$\textcolor{red}{\rightarrow}$}
+\renewcommand{\labelitemiv}{$\textcolor{brown}{\circ}$}
+
+\makeatother
+
+\usepackage{babel}
+\providecommand{\definitionname}{Definition}
+
+\begin{document}
+
+\MyLogo{Intro ML}
+\title{Supervised Learning - SVM}
+\author{Mark Asch - IMU/VLP/CSU }
+\date{2023}
+\maketitle
+
+\foilhead{Program}
+\begin{enumerate}
+\item Data Analysis
+
+\begin{enumerate}
+\item Introduction: the 4 identifiers of ``big data'' and ``data science''
+\item \textcolor{red}{Supervised learning methods:} regression---advanced,
+k-NN, linear classification methods, \textcolor{red}{SVM}, NN, decision
+trees. 
+\item Unsupervised learning methods: k-means, principal component analysis,
+clustering.
+\end{enumerate}
+\end{enumerate}
+
+\foilhead{Introduction}
+\begin{itemize}
+\item the ``support vector machine'' is a \textcolor{magenta}{classification
+}algorithm (though it can be used as a regressor---see below)
+\item SVM provides \textcolor{magenta}{excellent performance} in a broad
+range of contexts
+\item SVM is considered to be the best ``black box'' classifier available
+\item SVM generalizes the \textcolor{magenta}{boundaries} between classes
+to \textcolor{magenta}{nonlinear} curves, and operates in high dimensions
+too
+\end{itemize}
+
+\foilhead{Theory}
+\begin{itemize}
+\item SVM is based on the concept of \textcolor{magenta}{separating hyperplanes}
+\end{itemize}
+\begin{defn}
+A hyperplane in $p$-dimensional space is a subspace of dimension
+$p-1.$
+\end{defn}
+\begin{itemize}
+\item Example 1: in $\mathbb{R}^{2}$ a hyperplane is a straight line, 
+\[
+\beta_{0}+\beta_{1}x_{1}+\beta_{2}x_{2}=0,
+\]
+\item Example 2: in $\mathbb{R}^{3}$ a hyperplane is a plane, and in general,
+if $\mathbf{x}=\left(x_{1},x_{2},\ldots,x_{p}\right)^{\mathrm{T}}\in\mathbb{R}^{p}$
+is a point in the hyperplane, then $\mathbf{x}$ satisfies 
+\[
+\beta_{0}+\beta_{1}x_{1}+\beta_{2}x_{2}+\cdots+\beta_{p}x_{p}=0.
+\]
+If $\mathbf{x}$ does not satisfy the equation, then either 
+\[
+\beta_{0}+\beta_{1}x_{1}+\beta_{2}x_{2}+\cdots+\beta_{p}x_{p}>0,
+\]
+or 
+\[
+\beta_{0}+\beta_{1}x_{1}+\beta_{2}x_{2}+\cdots+\beta_{p}x_{p}<0.
+\]
+\item Conclusion: the hyperplane divides the space of dimension $p$ in
+two halves and thus separates the two classes, as shown in the Figure.
+\end{itemize}
+\begin{figure}
+\begin{centering}
+\includegraphics[scale=0.6]{\string"/Users/markasch/Dropbox/3Teaching/stat-ML/M2/03resources/ISLR/All Figures/Chapter9/9.1\string".pdf}
+\par\end{centering}
+\caption{Hyperplane $1+2X_{1}+3X_{2}=0$ and the 2 classes $1+2X_{1}+3X_{2}>0$
+(blue) and $1+2X_{1}+3X_{2}<0$ (violet).}
+
+\end{figure}
+
+
+\foilhead[-0.5in]{Classification with a Hyperplane}
+\begin{itemize}
+\item Suppose we have 
+\begin{itemize}
+\item a \textcolor{magenta}{data matrix} $X$ of dimension $n\times p$
+with $n$ \textcolor{magenta}{training observations} in a $p$-dimensional
+space
+\[
+x_{1}=\left(\begin{array}{c}
+x_{11}\\
+\vdots\\
+x_{1p}
+\end{array}\right),\ldots\,,x_{n}=\left(\begin{array}{c}
+x_{n1}\\
+\vdots\\
+x_{np}
+\end{array}\right)
+\]
+\item the observations fall into\textcolor{magenta}{{} two classes} denoted
+$-1$ and $1,$
+\[
+y_{1},y_{2},\ldots,y_{n}\in\left\{ -1,1\right\} 
+\]
+\item a vector of $p$ \textcolor{magenta}{test observations},
+\[
+x^{*}=\left(x_{1}^{*}\ldots\,x_{p}^{*}\right)^{T}
+\]
+\end{itemize}
+\item \textbf{Objective}: find a classifier, based on the training data,
+that will correctly class the test observations.
+\item If it is possible to construct a \textcolor{magenta}{separating hyperplane}
+that separates perfectly the training observations according to their
+class labels---we will say that the two classes are perfectly separable---then
+a test observation is affected to a class as a function of which side
+of the hyperplane it is in. 
+\begin{itemize}
+\item the sign of 
+\[
+f(x^{*})=\beta_{0}+\beta_{1}x_{1}^{*}+\beta_{2}x_{2}^{*}+\cdots+\beta_{p}x_{p}^{*}
+\]
+defines the class, and 
+\item the magnitude of $f(x^{*})$ gives us a measure of the confidence
+in our classification of $x^{*}.$ 
+\end{itemize}
+\item But there are many possible such hyperplanes---see Figure below---so
+we need to optimize.
+\end{itemize}
+\begin{figure}
+\begin{centering}
+\includegraphics[width=1\textwidth]{\string"/Users/markasch/Dropbox/3Teaching/stat-ML/M2/03resources/ISLR/All Figures/Chapter9/9.2\string".pdf}
+\par\end{centering}
+\caption{Two classes, blue and violet, with observations of 2 variables. Left:
+3 possible separating planes.Right: an optimal separating plane.}
+\end{figure}
+
+\begin{itemize}
+\item \textcolor{magenta}{Optimal Separating Hyperplane}: we seek the plane
+for which the minimal (orthogonal) distance to the observations is
+maximized (``maximal margin hyperplane'')
+
+\begin{itemize}
+\item this plane depends exclusively on \textcolor{magenta}{support vectors
+}that are the orthogonal projections onto the hyperplane from the
+equidistant, closest points on either side of the hyperplane-{}-{}-see
+next Figure.
+\end{itemize}
+\end{itemize}
+\begin{figure}
+\begin{centering}
+\noun{\includegraphics{\string"/Users/markasch/Dropbox/3Teaching/stat-ML/M2/03resources/ISLR/All Figures/Chapter9/9.3\string".pdf}}
+\par\end{centering}
+\caption{Optimal Hyperplane: three observations are equidistant and form the
+support vectors. Dashed lines form the margins.}
+
+\end{figure}
+
+
+\foilhead{Maximal Margin Classifier}
+
+Let $x_{1},\ldots,x_{n}\in\mathbb{R}^{p}$ be a set of $n$ training
+observations, with their associated class labels, $y_{1},\ldots,y_{n}\in\left\{ -1,1\right\} .$ 
+\begin{itemize}
+\item The \textcolor{magenta}{maximal margin hyperplane} is the solution
+to the following optimization problem: Maximize, over $\beta_{0},\ldots,\beta_{p},$
+the distance (margin) $M$ such that:
+\begin{itemize}
+\item $\sum_{j=1}^{p}\beta_{j}^{2}=1,$ 
+\item $y_{i}\left(\beta_{0}+\beta_{1}x_{i1}+\beta_{2}x_{i2}+\cdots+\beta_{p}x_{ip}\right)\ge M\quad\forall i=1,\ldots,n.$ 
+\end{itemize}
+\item These two \textcolor{magenta}{constraints} guarantee that each observation
+is
+\begin{itemize}
+\item on the right side of the hyperplane, and 
+\item at least a distance $M$ from the hyperplane. 
+\end{itemize}
+\end{itemize}
+
+\foilhead{General Case }
+\begin{dinglist}{52}
+\item The maximal margin classifier is a very natural way to classify, but,
+\end{dinglist}
+\begin{dinglist}{56}
+\item in many cases a separating hyperplane simply does not exist, and hence
+there is no maximal margin classifier.
+\end{dinglist}
+\begin{figure}
+\begin{centering}
+\includegraphics[scale=0.6]{\string"/Users/markasch/Dropbox/3Teaching/stat-ML/M2/03resources/ISLR/All Figures/Chapter9/9.4\string".pdf}
+\par\end{centering}
+\caption{Example of two non-separable classes}
+
+\end{figure}
+
+\begin{itemize}
+\item We can generalize the hyperplane approach by introducing a soft constraint
+to attain an \textcolor{magenta}{approximate} separation, the \textcolor{magenta}{support
+vector classifier}. 
+\begin{itemize}
+\item This hyperplane is chosen to separate most of the observations into
+the two classes, but it can \textcolor{magenta}{misclassify} some
+of them. 
+\item The optimization problem becomes 
+\begin{align*}
+ & \max_{\beta_{0},\ldots,\beta_{p},\epsilon_{1},\ldots,\epsilon_{n}}M\\
+ & \mathrm{such~that}\sum_{j=1}^{p}\beta_{j}^{2}=1,\\
+ & y_{i}\left(\beta_{0}+\beta_{1}x_{i1}+\beta_{2}x_{i2}+\cdots+\beta_{p}x_{ip}\right)\ge M(1-\epsilon_{i}),\\
+ & \epsilon_{1}\ge0,\quad\sum_{i=1}^{n}\epsilon_{i}\le C,
+\end{align*}
+where $C>0$ is an adjustment parameter, $M$ is the width of the
+margin, and the $\epsilon_{i}$ allow individual observations to be
+on the wrong side of the margin or hyperplane. 
+\item \textbf{Note}: when $C$ decreases, the tolerance for an observation
+to be on the bad side decreases too, and the margin itself becomes
+narrower.
+\end{itemize}
+\end{itemize}
+\begin{figure}
+\begin{centering}
+\includegraphics[scale=0.7]{\string"/Users/markasch/Dropbox/3Teaching/stat-ML/M2/03resources/ISLR/All Figures/Chapter9/9.7\string".pdf}
+\par\end{centering}
+\caption{Support vector classifier with 4 values of $C$ - biggest (top-left)
+to smallest (bottom-right)}
+
+\end{figure}
+
+
+\foilhead{Support Vector Machines (SVM)}
+\begin{itemize}
+\item in practice, we will possibly encounter\textcolor{magenta}{{} nonlinear}
+boundaries between the classes...
+\end{itemize}
+\begin{figure}
+\begin{centering}
+\includegraphics[scale=0.8]{\string"/Users/markasch/Dropbox/3Teaching/stat-ML/M2/03resources/ISLR/All Figures/Chapter9/9.8\string".pdf}
+\par\end{centering}
+\caption{2 classes with a nonlinear boundary between them (left). The support
+vector classifier cannot separate them (right).}
+\end{figure}
+
+\begin{itemize}
+\item How to generalize? We observe that the computation of the linear SVM
+only depends on \textcolor{magenta}{scalar products}, of the form
+\[
+f(x)=\beta_{0}+\sum_{i=1}^{n}\alpha_{i}\left\langle x,x_{i}\right\rangle 
+\]
+where
+\[
+\left\langle x_{i},x_{i'}\right\rangle =\sum_{j=1}^{p}x_{ij}x_{i'j}
+\]
+\item So we can replace these by general,\emph{ }\textcolor{magenta}{kernel
+functions} $K(x_{i},x_{i'})$ that quantify the similarity between
+two observations. 
+\begin{itemize}
+\item For example, 
+\[
+K(x_{i},x_{i'})=\left(1+\sum_{j=1}^{p}x_{ij}x_{i'j}\right)^{d}
+\]
+which is a \textcolor{magenta}{polynomial kernel }of degree $d.$ 
+\item Another popular choice is the \textcolor{magenta}{radial kernel},
+\[
+K(x_{i},x_{i'})=\exp\left(-\gamma\sum_{j=1}^{p}\left(x_{ij}-x_{i'j}\right)^{2}\right),
+\]
+where the parameter $\gamma$ is to be tuned to the class extent.
+\end{itemize}
+\end{itemize}
+\begin{figure}
+\begin{centering}
+\includegraphics[scale=0.8]{\string"/Users/markasch/Dropbox/3Teaching/stat-ML/M2/03resources/ISLR/All Figures/Chapter9/9.9\string".pdf}
+\par\end{centering}
+\caption{SVM with 2 kernels: polynomial of degree 3 (left) and radial (right)}
+
+\end{figure}
+
+
+\foilhead{Example : cardiac disease}
+\begin{itemize}
+\item The \texttt{\textcolor{blue}{Heart}} data are a database of 297 patients
+with 13 predictors including \texttt{\textcolor{blue}{Age}}, \texttt{\textcolor{blue}{Sex}},
+\texttt{\textcolor{blue}{Chol}} and a binary outcome \texttt{\textcolor{blue}{HD}}
+for signs of chest pain. A \texttt{\textcolor{blue}{Yes}} result signifies
+the presence of cardiac disease after an angiographic test, and \texttt{\textcolor{blue}{No}}
+signifies the absence.
+\item \textcolor{magenta}{Objective} : use the predictors to predict whether
+an individual has a cardiac disease or not. 
+\begin{itemize}
+\item divide the data randomly into 207 training observations and 90 test
+observations
+\item statistical model 1: LDA and support vector classifier
+\item statistical model 2: SVM with a radial kernel
+\end{itemize}
+\item the 2 classifiers calculate 
+
+\begin{itemize}
+\item \textcolor{magenta}{scores }of the form
+\[
+\hat{f}(X)=\hat{\beta}_{0}+\hat{\beta}_{1}X_{1}+\cdots+\hat{\beta}_{p}X_{p}
+\]
+for each observation
+\item then, for a given \textcolor{magenta}{threshold}, $t,$ classify the
+observations in the category \emph{presence or absence of cardiac
+disease} according to 
+\[
+\hat{f}(X)<t\quad\mathrm{or}\quad\hat{f}(X)\ge t
+\]
+\item the\textcolor{magenta}{{} ROC curve} (<<receiver operating characteristic>>)is
+obtained by varying $t$ and calculating the false positive and false
+negative rates on the training data, then on the test data
+\begin{itemize}
+\item the closer the curve is to the left and top, the better is the classification
+\item objective is AUC = 1, where AUC is the Area Under the Curve
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\begin{figure}
+\begin{centering}
+\includegraphics[scale=0.8]{\string"/Users/markasch/Dropbox/3Teaching/stat-ML/M2/03resources/ISLR/All Figures/Chapter9/9.10\string".pdf}
+\par\end{centering}
+\caption{ROC curves for training data \texttt{\textcolor{blue}{Heart}}}
+
+\end{figure}
+
+\begin{itemize}
+\item Results for training data:
+\begin{itemize}
+\item the linear SVM linear (red curve) is better than LDA...
+\item for larger values of $\gamma$ (more non linearity in the fit), the
+classification improves 
+\item the radial kernel with $\gamma=10^{-1}$ is best, and better than
+the linear SVM 
+\end{itemize}
+\end{itemize}
+\begin{figure}
+\begin{centering}
+\includegraphics[scale=0.8]{\string"/Users/markasch/Dropbox/3Teaching/stat-ML/M2/03resources/ISLR/All Figures/Chapter9/9.11\string".pdf}
+\par\end{centering}
+\caption{ROC curves for test data \texttt{\textcolor{blue}{Heart}}}
+\end{figure}
+
+\begin{itemize}
+\item Results for test data:
+\begin{itemize}
+\item linear SVM is slightly better than LDA
+\item the radial kernel with $\gamma=10^{-1}$ is no longer the best
+\item a model with more flexibility (more complex) does not always produce
+the best test results (bias-variance tradeoff...)
+\end{itemize}
+\end{itemize}
+
+\foilhead{SVM for more than 2 Classes}
+\begin{itemize}
+\item we have only seen problems of\textcolor{magenta}{{} binary classification}
+($K=2$ classes)---though these are very common.
+\item how do we generalize to an \textcolor{magenta}{arbitrary} number of
+classes?
+\begin{itemize}
+\item classification \textcolor{magenta}{one-to-one}: construct $\binom{K}{2}$
+binary classifiers, apply to test data, and classify according to
+highest frequency (\textcolor{magenta}{default} method)
+\item classification \textcolor{magenta}{one-to-all} : fit $K$ SVMs where
+we compare one of the $K$ classes to the other $K-1$ classes.
+\end{itemize}
+\end{itemize}
+
+\foilhead{Function \texttt{\textcolor{blue}{svm}} of R}
+\begin{itemize}
+\item in the library \texttt{\textcolor{blue}{e1071}}
+\item arguments:
+\begin{itemize}
+\item formula of the form \texttt{\textcolor{blue}{y \textasciitilde{} x}}
+that describes the relation between the response variable and the
+explanatory variables (for a classification, \texttt{\textcolor{blue}{y}}
+must be of type ``factor'')
+\item \texttt{\textcolor{blue}{data}} = data matrix
+\item \texttt{\textcolor{blue}{scale}} = vector of logical values describing
+which explanatory variables should be scaled (by default = \texttt{\textcolor{blue}{TRUE}})
+\item \texttt{\textcolor{blue}{kernel}} = choice of kernel: linear, polynomial,
+radial, sigmoid 
+\item \texttt{\textcolor{blue}{gamma}} is the parameter in all the kernels
+except the linear one
+\item \texttt{\textcolor{blue}{cost}} is the cost and equals $1/C,$ where
+$C$ is the regularization coefficient in the optimization (when \texttt{\textcolor{blue}{cost}}
+is large, the margins are narrow and the number of support vectors
+will be fewer)
+\end{itemize}
+\item tools:
+\begin{itemize}
+\item \texttt{\textcolor{blue}{plot }}: plot the classification
+\item \texttt{\textcolor{blue}{table }}: display the confusion table
+\item \texttt{\textcolor{blue}{predict }}: apply the model to the test data
+\item \texttt{\textcolor{blue}{tune}} : perform a grid-search for the hyper-parameters
+\texttt{\textcolor{blue}{cost}} and \texttt{\textcolor{blue}{gamma}},
+by using cross validation (by default, 10-fold) or bootstrap, and
+return the best model in \texttt{\textcolor{blue}{best.tune()}}.
+\end{itemize}
+\end{itemize}
+
+\foilhead{Other examples}
+\begin{enumerate}
+\item Random data: \texttt{\textcolor{blue}{svm-1.html.}}
+\item Genomic data: \texttt{\textcolor{blue}{svm-genomic.html.}}
+\end{enumerate}
+
+\foilhead{References}
+\begin{enumerate}
+\item M. DeGroot, M. Schervish, \emph{Probability and Statistics}, Addison
+Wesley, 2002.
+\item Spiegel, Murray and Larry Stephens,\emph{ Schaum's Outline of Statistics,}
+6th edition, McGraw Hill. 2017.
+\item G. James, D. Witten, T. Hastie, R. Tibshirani. \emph{An Introduction
+to Statistical Learning with Applications in R.} Springer. 2013.
+\item T. Hastie, R. Tibshirani, J. Friedman. \emph{The Elements of Statistical
+Learning}. Springer. 2009.
+\item Rachel Schutt and Cathy O\textquoteright Neil. \emph{Doing Data Science.}
+O'Reilly. 2014.
+\end{enumerate}
+
+\end{document}

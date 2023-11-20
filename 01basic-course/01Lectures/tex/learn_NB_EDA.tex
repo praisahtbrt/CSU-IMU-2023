@@ -1,0 +1,236 @@
+%% LyX 2.4.0~beta5 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{foils}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\pagestyle{foilheadings}
+\setcounter{secnumdepth}{1}
+\setcounter{tocdepth}{1}
+\usepackage{xcolor}
+\usepackage{pifont}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{graphicx}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% A simple dot to overcome graphicx limitations
+\newcommand{\lyxdot}{.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\newenvironment{lyxcode}
+	{\par\begin{list}{}{
+		\setlength{\rightmargin}{\leftmargin}
+		\setlength{\listparindent}{0pt}% needed for AMS classes
+		\raggedright
+		\setlength{\itemsep}{0pt}
+		\setlength{\parsep}{0pt}
+		\normalfont\ttfamily}%
+	 \item[]}
+	{\end{list}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{xcolor}
+\renewcommand{\labelitemi}{$\textcolor{blue}{\bullet}$}
+\renewcommand{\labelitemii}{$\textcolor{teal}{\Rightarrow}$}
+\renewcommand{\labelitemiii}{$\textcolor{red}{\rightarrow}$}
+\renewcommand{\labelitemiv}{$\textcolor{brown}{\circ}$}
+% for French theorems, etc. since I'm using English to fix bullet pb.
+\providecommand{\examplename}{Example}
+\providecommand{\definitionname}{Definition}
+\providecommand{\theoremnname}{Theorem}
+\providecommand{\remarkname}{Remark}
+\providecommand{\exercisename}{Exercise}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+
+\MyLogo{Intro to ML}
+\title{Notebooks, I/O and Exploratory Data Analysis (EDA)}
+\author{Mark Asch - IMU/VLP/CSU }
+\date{2023}
+\maketitle
+
+\foilhead[-0.5in]{Creation of a Notebook in RStudio}
+\begin{itemize}
+\item Open a new notebook :
+\begin{itemize}
+\item File $\rightarrow$
+\item New file $\rightarrow$
+\item R markdown... ou R Notebook
+\end{itemize}
+\begin{center}
+\includegraphics[scale=0.6]{\string"/Users/markasch/Dropbox/3Teaching/stat-ML/M2/02TD-TP/Screenshot 2020-10-03 at 12.14.01\string".png}
+\par\end{center}
+\begin{itemize}
+\item Insert text, code, results, commentaries and conclusions.
+\begin{itemize}
+\item Code $\rightarrow$ Insert Chunk
+\end{itemize}
+\item Execution : (Code $\rightarrow$ ) Run $\rightarrow$ Run current
+chunk
+\item Visualize/Output : Knit $\rightarrow$ Knit to HTML (Knit to PDF)
+\end{itemize}
+\end{itemize}
+
+\foilhead{Structure of a Notebook}
+\begin{itemize}
+\item blocks of 
+\begin{itemize}
+\item text
+\item code
+\item graphics
+\end{itemize}
+\item instructions/recommendations :
+\begin{itemize}
+\item divide into blocks so that each block only produces a SINGLE output
+(text or graphic)
+\item avoid multiple outputs...
+\item comment each block with markdown (see below)
+\item comment each result!
+\end{itemize}
+\end{itemize}
+
+\foilhead{Markdown}
+\begin{itemize}
+\item titles: \#, \#\#, etc.
+\item lists: -, 1., a., etc.
+\item text format:
+\begin{itemize}
+\item {*}italics{*}
+\item {*}{*}bold{*}{*}
+\end{itemize}
+\item symbols, formulas, equations : use LaTeX...
+\begin{itemize}
+\item \$ Ax = b\$
+\item \$\$ I = \textbackslash int\_a\textasciicircum b f(x) dx \$\$
+\end{itemize}
+\item verbatim (keywords, etc) : `code`
+\end{itemize}
+
+\foilhead{Input/Output of Data (I/O)}
+\begin{itemize}
+\item many databases are included in R, and/or in R libraries
+\begin{lyxcode}
+\textcolor{violet}{>~data()~}\textcolor{teal}{\#~for~the~complete~list}
+
+\textcolor{violet}{>~data(}\textquotedbl\textcolor{violet}{iris}\textquotedbl\textcolor{violet}{)~}\textcolor{teal}{\#~load~the~~iris~data}
+
+\textcolor{violet}{>~head~(iris)~}\textcolor{teal}{\#~the~first~6~~lines}
+\end{lyxcode}
+\item a large number available from the UCI archives:\textcolor{blue}{{} \url{https://archive.ics.uci.edu/}}
+\item load and save data in an R session:
+\begin{lyxcode}
+\textcolor{violet}{>~save(x,~y,~z,~file~=~\textquotedbl data.Rdata\textquotedbl )}
+
+\textcolor{violet}{>~save(data,~file~=~\textquotedbl data.Rdata\textquotedbl )}
+
+\textcolor{violet}{>~load(\textquotedbl data.Rdata\textquotedbl )}
+\end{lyxcode}
+\end{itemize}
+
+\foilhead{Dataframes}
+\begin{itemize}
+\item create a dataframe (R data structure) :
+\end{itemize}
+\begin{lyxcode}
+\textcolor{violet}{>~subject\_name~<-~c(\textquotedbl J.~Du\textquotedbl ,~\textquotedbl A.~Du\textquotedbl ,\textquotedbl P.~Ba\textquotedbl )~}
+
+\textcolor{violet}{>~temperature~<-~c(36.8,~37.8,~39.5)}
+
+\textcolor{violet}{>~status\_COVID~<-~c(FALSE,~FALSE,~TRUE)~}
+
+\textcolor{violet}{>~gender~<-~factor(c(\textquotedbl M\textquotedbl ,~\textquotedbl F\textquotedbl ,~\textquotedbl M\textquotedbl ))~}
+
+\textcolor{violet}{>~blood~<-~factor(c(\textquotedbl O\textquotedbl ,~\textquotedbl AB\textquotedbl ,~\textquotedbl A\textquotedbl ),~}
+
+\textcolor{violet}{{}~~~~~~~~~~~levels=c(\textquotedbl A\textquotedbl ,~\textquotedbl B\textquotedbl ,~\textquotedbl AB\textquotedbl ,~\textquotedbl O\textquotedbl ))}
+
+\textcolor{teal}{\#~Create~the~dataframe}
+
+\textcolor{violet}{pt\_data~<-~data.frame(subject\_name,~temperature,~}
+
+\textcolor{violet}{{}~~~~~~~~status\_COVID~,~gender,~blood,~}
+
+\textcolor{violet}{{}~~~~~~~~stringsAsFactors=FALSE)}
+
+\textcolor{teal}{\#~Print~the~dataframe}
+
+\textcolor{violet}{>~pt\_data~}
+
+\textcolor{violet}{{}~subject\_name~~temperature~status\_COVID~gender~blood~}
+
+\textcolor{violet}{1~J.~Du~~~~~~~36.8~~~~~~~FALSE~~~~~~M~~~~~O~}
+
+\textcolor{violet}{2~A.~Du~~~~~~~37.8~~~~~~~FALSE~~~~~~F~~~~AB~}
+
+\textcolor{violet}{3~P.~Ba~~~~~~~39.5~~~~~~~TRUE~~~~~~~M~~~~~A}
+\end{lyxcode}
+
+\foilhead{File I/O}
+\begin{itemize}
+\item load a CSV file (exported from a spreadsheet/Excel) :
+\end{itemize}
+\begin{lyxcode}
+\textcolor{violet}{>~my\_data~<-~read.csv(\textquotedbl data.csv\textquotedbl ,~header=TRUE)}
+\end{lyxcode}
+\begin{itemize}
+\item if the separator is a <<;>> : \textcolor{violet}{read.csv2(...)}
+\item save a model for later use:
+\end{itemize}
+\begin{lyxcode}
+\textcolor{violet}{final\_model~<-~...~}
+
+\textcolor{teal}{\#~save~model~on~disk}
+
+\textcolor{violet}{saveRDS(final\_model,~\textquotedbl ./final\_model.rds\textquotedbl )~~~}
+
+\textcolor{teal}{\#~later~on...~~~}
+
+\textcolor{teal}{\#~load~the~model}\textcolor{violet}{{}~}
+
+\textcolor{violet}{super\_model~<-~readRDS(\textquotedbl ./final\_model.rds\textquotedbl )~}
+
+\textcolor{violet}{print(super\_model)~}
+
+\textcolor{teal}{\#~predictions~of~\textquotedbl new~data\textquotedbl ~~}
+
+\textcolor{violet}{previsions~<-~predict(super\_model,~...~)~}
+\end{lyxcode}
+
+\foilhead{Exploratory Data Analysis}
+\begin{dinglist}{52}
+\item A first,\textcolor{magenta}{{} crucial step} in the process of <<data
+science>>
+\item There is no hypothesis, no model - we \textcolor{magenta}{explore}
+and try to understand the problem!
+\item The \textcolor{magenta}{tools} of EDA are:
+
+\begin{itemize}
+\item plots
+\item graphics
+\item summary statistics
+\end{itemize}
+\item The \textcolor{magenta}{methodology}: 
+
+\begin{itemize}
+\item pass systematically through all the data
+\item calculate all the summary statistics: mean, minumum, maximum, quartiles,
+outliers
+\item plot all distributions of all the variables (``box plots'')
+\item plot all time series
+\item try changes of variables
+\item look at all the relations two-by-two (<<scatterplots>>)
+\end{itemize}
+\end{dinglist}
+\begin{itemize}
+\item See also the document \texttt{\textcolor{blue}{learn\_stat.pdf}}
+\end{itemize}
+
+\end{document}

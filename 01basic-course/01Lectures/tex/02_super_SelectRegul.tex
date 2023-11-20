@@ -1,0 +1,532 @@
+%% LyX 2.4.0~beta5 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{foils}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\pagestyle{foilheadings}
+\setcounter{secnumdepth}{1}
+\setcounter{tocdepth}{1}
+\usepackage{xcolor}
+\usepackage{pifont}
+\usepackage{algorithm2e}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\newenvironment{lyxcode}
+	{\par\begin{list}{}{
+		\setlength{\rightmargin}{\leftmargin}
+		\setlength{\listparindent}{0pt}% needed for AMS classes
+		\raggedright
+		\setlength{\itemsep}{0pt}
+		\setlength{\parsep}{0pt}
+		\normalfont\ttfamily}%
+	 \item[]}
+	{\end{list}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{xcolor}
+\renewcommand{\labelitemi}{$\textcolor{blue}{\bullet}$}
+\renewcommand{\labelitemii}{$\textcolor{teal}{\Rightarrow}$}
+\renewcommand{\labelitemiii}{$\textcolor{red}{\rightarrow}$}
+\renewcommand{\labelitemiv}{$\textcolor{brown}{\circ}$}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+
+\MyLogo{Intro to ML}
+\title{Supervised Learning - Selection and Regularization for Regression
+Models }
+\author{Mark Asch - IMU/VLP/CSU }
+\date{2023}
+\maketitle
+
+\foilhead{Program}
+\begin{enumerate}
+\item Data Analysis
+
+\begin{enumerate}
+\item Introduction: the 4 identifiers of ``big data'' and ``data science''
+\item \textcolor{red}{Supervised learning methods: regression---advanced},
+k-NN, linear classification methods, SVM, NN, decision trees. 
+\item Unsupervised learning methods: k-means, principal component analysis,
+clustering.
+\end{enumerate}
+\end{enumerate}
+
+\foilhead[-0.5in]{Limits of the Regression Model}
+\begin{itemize}
+\item Recall the standard \textcolor{magenta}{linear model} for a regression,
+\[
+Y=\beta_{0}+\beta_{1}X_{1}+\beta_{2}X_{2}+\ldots+\beta_{p}X_{p}
+\]
+that describes the relationship between the response $Y$ and the
+$p$ explanatory variables $X_{1},\ldots,X_{p}$ and is fit by least-squares
+\item Properties:
+\begin{itemize}
+\item easy to interpret
+\item inference is possible and rigorous
+\item can take into account non-linearities (on condition to know, or to
+guess, them...) 
+\item robustness for real problems 
+\end{itemize}
+\item Before passing to \textcolor{magenta}{nonlinear} models (k-nn, SVM,
+trees, NN, etc.), is it possible to improve the linear model?
+\item Why should we use other fitting methods based on least-squares?
+\begin{itemize}
+\item Forecast Precision 
+\begin{itemize}
+\item if the true relation is approximately linear, then the bias of SLR
+will be small
+\item if $n\gg p,$ then the variance of SLR will be small and we obtain
+good predictive performance on (unseen) test data
+\item if $n\approx p,$ then SLR will have a tendency to overfit and the
+variance will be high and give bad predictions
+\item if $p>n,$ then the variance is infinite and SLR cannot be used...
+\item by \textcolor{magenta}{constraining} or \textcolor{magenta}{shrinking}
+the estimated coefficients, we can reduce the variance without too
+much increase in the bias---this produces a clear improvement of
+the predictive precision
+\end{itemize}
+\item Model Interpretation
+\begin{itemize}
+\item often, in multiple regression, several explanatory variables are not
+associated with the response
+\item including such non-pertinent variables leads to complex models---see
+bias-variance tradeoff
+\item the \textcolor{magenta}{selection} of attributes/variables can eliminate
+these nuisance variables...
+\end{itemize}
+\end{itemize}
+\end{itemize}
+
+\foilhead{Three classes of methods}
+\begin{enumerate}
+\item \textcolor{magenta}{Selection} of subsets: we identify a subset of
+the $p$ predictors and we apply least-squares to this reduced set
+\item \textcolor{magenta}{Regularization}/penalization/shrinking: we fit
+on all $p$ variables, but we shrink the coefficients towards zero,
+thus reducing the variance (in the limit, we perform attribute selection...).
+The two common approaches are: 
+\begin{itemize}
+\item ridge regression 
+\item LASSO regression 
+\end{itemize}
+\item \textcolor{magenta}{Reduction} of dimension: we project the $p$ predictors
+onto a subspace of dimension $M$ with $M<p.$ The two common approaches
+are: 
+\begin{itemize}
+\item PCR---principal component regression
+\item PLS---partial least-squares
+\end{itemize}
+\end{enumerate}
+
+\foilhead{Subset Selection }
+\begin{itemize}
+\item Recall:
+\begin{align*}
+\mathrm{RSS}(\beta) & =\sum_{i=1}^{n}\left(y_{i}-\beta_{0}-\sum_{j=1}^{p}\beta_{j}x_{ij}\right)^{2}
+\end{align*}
+\begin{align*}
+R^{2}= & 1-\frac{\mathrm{RSS}}{\mathrm{TSS}}
+\end{align*}
+\item we fit a SLR for each possible combination of $p$ predictors
+\begin{itemize}
+\item $p$ models with a single predictor
+\item $\binom{p}{2}=p(p-1)/2$ models with two predictors, etc., etc.
+\end{itemize}
+\item we then choose the best model (see criteria below)
+\item Algorithm:
+\end{itemize}
+\begin{lyxcode}
+Let~$M_{0}$~l~be~the~null~model,~~without~predictors
+
+\textbf{for}~$k=1,2,\ldots,p$
+
+~~fit~all~~$\binom{p}{k}$~models~of~$k$~predictors
+
+~~choose~the~best~model~$M_{k}$~of~minimal~RSS~~
+
+~~~~~or~maximal~$R^{2}$
+
+\textbf{next}~$k$
+
+Select~the~best~model~among~$M_{0},\ldots,M_{p}$~
+
+~~by~cross-validation,~~AIC,~~BIC~or~adjusted~$R^{2}$
+\end{lyxcode}
+\begin{itemize}
+\item when $p$ is large, the method of subset selection can be too expensive
+\item we can proceed stepwise, by adding (forward) or removing (backward)
+predictors one-by-one (\textcolor{magenta}{stepwise} \textcolor{magenta}{selection})
+\end{itemize}
+
+\foilhead{Criteria of Choice}
+\begin{itemize}
+\item the selection methods produce an ensemble of models
+\begin{itemize}
+\item each model contains a subset of $p$ explanatory variables (predictors)
+\item which model is the best???
+\item the model that contains all the predictors will always have the smallest
+value of RSS and the greatest value of $R^{2}=1-\mathrm{RSS}/\mathrm{TSS}$
+\begin{itemize}
+\item \textcolor{magenta}{Conclusion}: RSS and $R^{2}$ are \textbf{NOT}
+good criteria for choosing a model among those with a different number
+of predictors
+\end{itemize}
+\end{itemize}
+\item We must estimate the\textcolor{magenta}{{} test error} in order to best
+select among the models:
+\begin{enumerate}
+\item \textcolor{magenta}{Indirect} estimation by \textcolor{magenta}{refitting}
+on the training error 
+\item \textcolor{magenta}{Direct} estimation by a validation set or \textcolor{magenta}{cross-validation
+}(see below)
+\end{enumerate}
+\end{itemize}
+
+\foilhead{Criteria for Refitting}
+
+There are four criteria that can be used for selecting a model among
+models with different numbers of variables:
+\begin{enumerate}
+\item $C_{p}$
+\item AIC (Akaike Information Criterion)
+\item BIC (Bayesian Information Criterion)
+\item Adjusted $R^{2}$
+\end{enumerate}
+
+\foilhead{Criterion $C_{p}$}
+\begin{itemize}
+\item for a model fitted by least-squares with $d$ explanatory variables
+(predictors), define
+\[
+C_{p}=\frac{1}{n}\left(\mathrm{RSS}+2d\hat{\sigma}^{2}\right)
+\]
+where $\hat{\sigma}^{2}$ is an estimation of the variance of the
+error $\epsilon$ associated to each measurement/observation in the
+multilinear regression formula
+\item we estimate $\hat{\sigma}^{2}$ using the complete model with all
+the explanatory variables 
+\item the $C_{p}$ statistic adds a penalization of $2d\hat{\sigma}^{2}$
+to the training RSS in order to compensate for the fact that the training
+error always underestimates the test error.
+\item we can show that $C_{p}$ diminishes for models with a small value
+of the test error
+\item \textcolor{magenta}{Conclusion}: we choose the model with the minimal
+$C_{p}$ value
+\end{itemize}
+
+\foilhead{Criterion AIC}
+\begin{itemize}
+\item defined for a broad class of models fitted by a \textcolor{magenta}{maximum
+likelihood (ML) }method
+\item the Akaike Information Criterion is defined as 
+\[
+\mathrm{AIC}=\frac{1}{n\hat{\sigma}^{2}}\left(\mathrm{RSS}+2d\hat{\sigma}^{2}\right)
+\]
+\item in the case of SLR with Gaussian errors, ML and LS are identical!
+\end{itemize}
+
+\foilhead{Criterion BIC}
+\begin{itemize}
+\item criterion obtained from a Bayesian analysis...
+\item for a LS model with $d$ predictors, define the Bayesian Information
+Criterion
+\[
+\mathrm{BIC}=\frac{1}{n\hat{\sigma}^{2}}\left(\mathrm{RSS}+d\hat{\sigma}^{2}\log n\right)
+\]
+\item just as for $C_{p},$ the BIC will take a small value for a model
+with a low test error
+\item but, the factor $\log n$ will penalize models having many variables,
+and thus select smaller models (less complex ones) than $C_{p}$ or
+AIC 
+\item \textcolor{magenta}{Conclusion}: we choose the model with the minimal
+BIC value
+\end{itemize}
+
+\foilhead{Criterion Adjusted $R^{2}$}
+\begin{itemize}
+\item this criterion modifies the coefficient of determination $R^{2},$
+to compensate for the fact that the RSS always diminishes when we
+add variables, and hence $R^{2}=1-\mathrm{RSS}/\mathrm{TSS}$ increases 
+\item the definition takes into account both $n$ and $d,$
+\[
+\mathrm{Adjusted}\,R^{2}=1-\frac{\mathrm{RSS}/(n-d-1)}{\mathrm{TSS}/(n-1)}
+\]
+\item here, a large value implies a model with small test error
+\item adding \textcolor{magenta}{nuisance variables} gives an increase in
+$d$ and an increase of $\mathrm{RSS}/(n-d-1)$, and thus a reduction
+of the $\mathrm{Adjusted}\,R^{2}$
+\begin{itemize}
+\item in theory, the model with the largest (best) $\mathrm{Adjusted}\,R^{2}$
+will only contain the good variables and no nuisance variables
+\end{itemize}
+\end{itemize}
+
+\foilhead{Cross Validation }
+\begin{dinglist}{52}
+\item use a validation/test set to directly estimate the test error, without
+additional hypotheses
+\item applicable in more general contexts...
+\end{dinglist}
+\begin{dinglist}{56}
+\item CPU time can become a practical limit...
+\end{dinglist}
+
+\foilhead{Methods of Regularization/Shrinking}
+\begin{itemize}
+\item we will now modify directly the least-squares minimization criterion
+\item Recall: least-squares regression estimates the coefficients $\beta_{0},\ldots,\beta_{p}$
+by the minimization of
+\begin{align*}
+\mathrm{RSS}(\beta) & =\sum_{i=1}^{n}\left(y_{i}-\beta_{0}-\sum_{j=1}^{p}\beta_{j}x_{ij}\right)^{2}
+\end{align*}
+\item we obtain 2 alternative methods:
+\begin{itemize}
+\item ridge regression 
+\item the LASSO (least absolute shrinkage and selection operator)
+\end{itemize}
+\end{itemize}
+
+\foilhead{Ridge Regression (RR)}
+\begin{itemize}
+\item \textcolor{magenta}{Penalized Least-Squares} are used to estimate
+the values of $\beta_{j}$
+\[
+\mathrm{RSS}+\lambda\sum_{j=1}^{p}\beta_{j}^{2},
+\]
+where $\lambda\ge0$ is a tuning parameter, and the new term introduces
+a ``shrinkage'' by reducing the effects of terms whose squared values
+are small---this term will be small when $\beta_{1},\ldots\beta_{p},$
+are close to zero and its effect will be to shrink the estimates of
+the $\beta_{j}$ towards zero
+\begin{itemize}
+\item we use \textcolor{magenta}{cross validation} to estimate $\lambda$ 
+\item the coefficient of the intercept, $\beta_{0},$ is not shrunk---it
+measures the average of the response when all the $X_{i}=0$
+\item advantage over SLR: less variance, more bias when $\lambda$ increases
+\end{itemize}
+\item influence of $\lambda$
+\begin{itemize}
+\item when $\lambda=0,$ the ridge gives the least-squares estimates
+\item when $\lambda\rightarrow\infty,$ the ridge coefficients tend to zero
+\item selecting a good value is critical, and we use cross-validation.
+\end{itemize}
+\item advantages over SLR: 
+\begin{itemize}
+\item bias-variance tradeoff...
+\item with increasing $\lambda,$ the flexibility of the fit by ridge decreases,
+which implies less variance and more bias
+\item works well when SLR has a high variance, especially when $n\approx p$
+and $n<p.$
+\end{itemize}
+\end{itemize}
+
+\foilhead{LASSO Regression }
+\begin{itemize}
+\item uses the $l_{1}$-norm to penalize the $\beta_{j}$,
+\[
+\mathrm{RSS}+\lambda\sum_{j=1}^{p}\left|\beta_{j}\right|
+\]
+\item can, for $\lambda$ large enough, \textcolor{magenta}{cancel} the
+coefficients and thus reduce the dimension of predictors, which facilitates
+interpretation of the regression obtained---this is also called \textcolor{magenta}{``feature
+selection}'';
+\begin{itemize}
+\item we use cross-validation on a set of values $\left\{ \lambda_{1},\ldots,\lambda_{m}\right\} $
+to estimate $\lambda$ 
+\end{itemize}
+\item Ridge or LASSO? 
+\begin{itemize}
+\item LASSO provides more interpretable models
+\item LASSO has better performance when the response indeed depends on a
+subset of features
+\end{itemize}
+\end{itemize}
+
+\foilhead{Cross-Validation for $\lambda$}
+\begin{itemize}
+\item choose a grid of values for $\lambda$
+\item fix the number of folds for the cross-validation
+\item for each value of $\lambda$ compute the CV error
+\item select the value of $\lambda$ for which the CV error is minimal
+\item fit the model again, 
+\begin{itemize}
+\item with all the observations
+\item with the optimal value of $\lambda$
+\end{itemize}
+\item Beware of RNG initialization for reproducibility.
+\end{itemize}
+
+\foilhead{Methods of Dimension Reduction}
+\begin{itemize}
+\item 2 steps
+\begin{itemize}
+\item \textcolor{magenta}{transform} the explanatory variables $X_{1},X_{2},\ldots,X_{p}$,
+then 
+\item fit a \textcolor{magenta}{least-squares} model to the transformed
+variables 
+\end{itemize}
+\item 2 approaches 
+\begin{itemize}
+\item non-supervised: PCR---principal component regression
+\item supervised: PLS---partial least-squares
+\end{itemize}
+\end{itemize}
+
+\foilhead{Methods of Dimension Reduction II}
+\begin{itemize}
+\item let $Z_{1},Z_{2},\ldots,Z_{M}$ with $M<p,$ be linear combinations
+of the original $p$ predictors 
+\[
+Z_{m}=\sum_{j=1}^{p}\phi_{jm}X_{j},\quad m=1,\ldots,M
+\]
+\item fit a linear regression model
+\[
+y_{i}=\theta_{0}+\sum_{m=1}^{M}\theta_{m}z_{im}+\epsilon_{i},\quad i=1,\ldots,n
+\]
+\item if the coefficients $\phi_{1m},\phi_{2m},\ldots,\phi_{pm}$ are well-chosen,
+the a dimension reduction approach can attain a better performance
+than SLR
+\begin{itemize}
+\item the dimension is reduced from $p+1$ to $M+1$ 
+\item the fit is special case of SLR
+\[
+\sum_{m=1}^{M}\theta_{m}z_{im}=\sum_{j=1}^{p}\beta_{j}x_{ij}
+\]
+with 
+\[
+\beta_{j}=\sum_{m=1}^{M}\theta_{m}\phi_{jm}
+\]
+\end{itemize}
+\item the new coefficients are constrained and thus biased, but when $p>n$
+and $M\ll p$ the reduction of variance can be consequential
+\item the 2 steps of any variance reduction method are: 
+\begin{enumerate}
+\item obtain transformed predictors $Z_{1},Z_{2},\ldots,Z_{M}$
+\item fit a model to these $M$ predictors
+\end{enumerate}
+\end{itemize}
+
+\foilhead{Principal Component Regression (PCR)}
+\begin{itemize}
+\item PCA (see below) is an established method for obtaining a low-dimensional
+set of attributes from a large set of variables
+\begin{itemize}
+\item PCA is an unsupervised approach
+\item the first principal component gives the direction in which the observations
+vary the most, etc.
+\end{itemize}
+\item strong hypothesis: 
+\begin{itemize}
+\item the principal components, that are calculated from $X,$ are indeed
+representative of $Y$ 
+\item if yes, they can detect\textcolor{magenta}{{} causality} by considerably
+reducing the dimension of the parameter space
+\end{itemize}
+\item 2 steps:
+\begin{enumerate}
+\item Calculate the first $M$principal components
+\item Use these $M$ components in a linear regression model that we fit
+by least-squares
+\end{enumerate}
+\item Conclusions
+\begin{itemize}
+\item since $M\ll p,$ any \textcolor{magenta}{overfitting} is automatically
+attenuated
+\item PCR does not perform \textcolor{magenta}{feature selection}---the
+original $p$ predictors are still there, though in the form of linear
+combinations
+\item there is thus a link between PCR and ridge regression...
+\item the choice of $M$ is made by cross-validation
+\item it is strongly recommended to normalize the explanatory variables,
+unless they are of the same units
+\end{itemize}
+\end{itemize}
+
+\foilhead{Partial Least-Squares (PLS)}
+\begin{itemize}
+\item This is a \textcolor{magenta}{supervised} alternative to PCR: 
+\begin{itemize}
+\item find the components of $X$ that are also pertinent for $Y$
+\item calculate an ensemble of \textcolor{magenta}{latent vectors} that
+execute simultaneously a decomposition of $X$ and of $Y,$ under
+the constraint that these components describe as much as possible
+of the \textcolor{magenta}{covariance }between $X$ and $Y$
+\item the algorithms are quite complex...
+\end{itemize}
+\item Steps of the computation:
+\begin{itemize}
+\item normalize the $p$ explanatory variables 
+\item calculate $Z_{1}$ by setting each $\phi_{j1}$ in 
+\[
+Z_{1}=\sum_{j=1}^{p}\phi_{j1}X_{j}
+\]
+equal to the linear regression coefficient of $Y$ on $X_{j}$ which
+will place the most weight on the variables having the strongest correlation
+with the response
+\item calculate $Z_{2}$
+\begin{itemize}
+\item fit each of the variables for $Z_{1}$ by computing the regression
+on the residues...
+\end{itemize}
+\item etc.
+\end{itemize}
+\item Remarks: 
+\begin{itemize}
+\item PLS is often used in industrial applications where $p$ is big and
+$n$ is small
+\item PLS is rarely better than LASSO, but does not require any tuning...
+\end{itemize}
+\end{itemize}
+%
+
+\foilhead{Take-Home Lessons}
+\begin{itemize}
+\item The linear regression method, in its numerous guises, shows how we
+quantify uncertainty as best as possible. 
+\item Recall that the methods reduce the known part of the uncertainty since
+they are optimal estimates, but that the unknown, irreducible part
+remains. 
+\item Our job is then to inform the decision-maker on how risky this is.
+For this, we carefully modeled the ``noise'' in the system, and
+we proposed five methods for quantifying its effects:
+\end{itemize}
+\begin{enumerate}
+\item Use the $R$-squared value. 
+\item \textcolor{lightgray}{Use the $p$-values resulting from a hypothesis
+test, based on the $t$-statistic. }
+\item Check the normality of the residues. 
+\item Use cross-validation. 
+\item Check whether adding variables or transforming variables has an effect
+on the previous four. 
+\end{enumerate}
+\begin{itemize}
+\item If we perform all the above, rigorously, then we have fulfilled our
+responsibilities as modelers, engineers, data scientists, and applied
+mathematicians.
+\end{itemize}
+
+\foilhead{Examples}
+\begin{enumerate}
+\item Ridge Regression and LASSO for baseball data \texttt{\textcolor{blue}{reg-ridge-lasso.html}}
+\item PCR and PLS for baseball \texttt{\textcolor{blue}{reg\_PCR\_PLS.html}}
+\item Subset Selection for baseball \texttt{\textcolor{blue}{reg-subset-sel.html}}
+\end{enumerate}
+
+\foilhead{References}
+\begin{enumerate}
+\item G. James, D. Witten, T. Hastie, R. Tibshirani. \emph{An Introduction
+to Statistical Learning with Applications in R.} Springer. 2013.
+\item T. Hastie, R. Tibshirani, J. Friedman. \emph{The Elements of Statistical
+Learning}. Springer. 2009.
+\item Rachel Schutt and Cathy O\textquoteright Neil. \emph{Doing Data Science.}
+O'Reilly. 2014.
+\end{enumerate}
+
+\end{document}

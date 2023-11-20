@@ -1,0 +1,466 @@
+%% LyX 2.4.0~beta5 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{foils}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\pagestyle{foilheadings}
+\setcounter{secnumdepth}{1}
+\setcounter{tocdepth}{1}
+\usepackage{color}
+\usepackage{pifont}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{graphicx}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% A simple dot to overcome graphicx limitations
+\newcommand{\lyxdot}{.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{definition}
+\newtheorem{defn}{\protect\definitionname}
+\newenvironment{lyxcode}
+	{\par\begin{list}{}{
+		\setlength{\rightmargin}{\leftmargin}
+		\setlength{\listparindent}{0pt}% needed for AMS classes
+		\raggedright
+		\setlength{\itemsep}{0pt}
+		\setlength{\parsep}{0pt}
+		\normalfont\ttfamily}%
+	 \item[]}
+	{\end{list}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+
+\usepackage{xcolor}
+\renewcommand{\labelitemi}{$\textcolor{blue}{\bullet}$}
+\renewcommand{\labelitemii}{$\textcolor{teal}{\Rightarrow}$}
+\renewcommand{\labelitemiii}{$\textcolor{red}{\rightarrow}$}
+\renewcommand{\labelitemiv}{$\textcolor{brown}{\circ}$}
+
+\makeatother
+
+\usepackage{babel}
+\providecommand{\definitionname}{Definition}
+
+\begin{document}
+
+\MyLogo{Intro ML}
+\title{Supervised Learning - Classification and Regression Trees (CART)}
+\author{Mark Asch - IMU/VLP/CSU }
+\date{2023}
+\maketitle
+
+\foilhead{Program}
+\begin{enumerate}
+\item Data Analysis
+
+\begin{enumerate}
+\item Introduction: the 4 identifiers of ``big data'' and ``data science''
+\item \textcolor{red}{Supervised learning methods:} regression---advanced,
+k-NN, linear classification methods, SVM, NN, \textcolor{red}{decision
+trees}. 
+\item Unsupervised learning methods: k-means, principal component analysis,
+clustering.
+\end{enumerate}
+\end{enumerate}
+
+\foilhead{Introduction}
+\begin{itemize}
+\item Tree-based methods have a \textcolor{magenta}{long history} in applied
+statistics, dating back to the 1960's and formalized by L. Breiman
+in the early 1980's. 
+\item They are considered to be easily explainable, mainly because they
+reproduce, to some extent, the decision-making process of the human
+brain. In this sense, they can be considered as \textcolor{magenta}{expert
+systems}. 
+\item They have recently been improved by the more modern techniques of
+\textcolor{magenta}{bagging} and \textcolor{magenta}{boosting}. 
+\item Breiman's \textcolor{magenta}{random forest} (2001) remains one of
+the most simple, stable and robust methods for performing tree-based
+analysis.
+\item They can be used for both \textcolor{magenta}{regression} and \textcolor{magenta}{classification} 
+\begin{itemize}
+\item The objective of any tree-based method is to \textcolor{magenta}{segment}
+the space of predictions into a number of simple regions. 
+\item Then, for a given observation, use the \textcolor{magenta}{average}
+or the mode of the training observations of the region in which the
+observation belongs as the prediction. 
+\item Basic decision trees are\textcolor{magenta}{{} simple} to compute, and
+very \textcolor{magenta}{simple} to interpret.
+\item Unfortunately, this basic approach is \textcolor{magenta}{not robust}-{}-{}-see
+below-{}-{}-and we usually must resort to methods based on \textcolor{magenta}{multiple
+trees} that improve the predictive accuracy even though we then lose
+some of the interpretability.
+\end{itemize}
+\end{itemize}
+
+\foilhead{A Simple Example}
+\begin{itemize}
+\item The most easily understood example of a decision tree is one based
+on \textcolor{magenta}{baseball statistics}. 
+\begin{itemize}
+\item We want to predict a player's salary based on the number of years
+and the number of hits. 
+\item An extremely simple and understandable tree is obtained, and is shown
+in the Figure
+\end{itemize}
+\end{itemize}
+\begin{figure}
+\begin{centering}
+\includegraphics[scale=0.35]{\string"/Users/markasch/Dropbox/3Teaching/stat-ML/M2/03resources/ISLR/All Figures/Chapter8/8.1\string".pdf}
+\par\end{centering}
+\caption{Regression tree for predicting baseball players' salaries, based on
+their experience (Years) and their number of Hits.}
+
+\end{figure}
+
+
+\foilhead[-0.5in]{Construction of a Regression Tree}
+
+The \textcolor{magenta}{decision tree} is constructed in two steps. 
+\begin{enumerate}
+\item Divide the prediction space, containing all the values of the predictors
+$X_{1},\ldots,X_{p},$ into $J$ distinct regions, or intervals, $R_{1},\ldots,R_{J}.$ 
+\item To each observation, attribute the average of the response values
+of region $R_{j}$ in which it falls. 
+\end{enumerate}
+The \textcolor{magenta}{regions} themselves are constructed following
+the sequence of basic steps: 
+\begin{enumerate}
+\item Divide the space of predictors into hypercubes. 
+\item Find the cubes that minimize the \textcolor{magenta}{residual sum
+of squares}, 
+\[
+\mathrm{RSS}=\sum_{j=1}^{J}\sum_{i\in R_{j}}\left(y_{i}-\hat{y}_{R_{j}}\right)^{2},
+\]
+where $\hat{y}_{R_{j}}$ is the average response of the training observations
+in cube $j.$ 
+\item Use a recursive, binary split---top-down approach---where we choose
+$X_{j}$ and a splitting value $s$ that minimizes 
+\[
+\sum_{i:x_{i}\in R_{1}(j,s)}\left(y_{i}-\hat{y}_{R_{1}}\right)^{2}+\sum_{i:x_{i}\in R_{2}(j,s)}\left(y_{i}-\hat{y}_{R_{2}}\right)^{2}
+\]
+with 
+\[
+R_{1}(j,s)=\left\{ X\vert X_{j}<s\right\} \,\,\mathrm{and}\,\,R_{2}(j,s)=\left\{ X\vert X_{j}\ge s\right\} 
+\]
+\item Continue subdividing the regions until no region contains more than
+$N$ observations. 
+\end{enumerate}
+\begin{itemize}
+\item \textcolor{magenta}{Prediction} : once the regions $R_{1},\ldots,R_{J}$
+created, we predict the response for a test observation by the average
+of the training observations in the region in which the test observation
+belongs.
+\end{itemize}
+\begin{figure}
+\begin{centering}
+\includegraphics[scale=0.7]{\string"/Users/markasch/Dropbox/3Teaching/stat-ML/M2/03resources/ISLR/All Figures/Chapter8/8.3\string".pdf}
+\par\end{centering}
+\caption{Recursive binary partition of 2 attributes into 5 regions.}
+\end{figure}
+
+
+\foilhead{Pruning Trees}
+\begin{itemize}
+\item The procedure described above produces a good result for the training
+set, but has a tendency to \textcolor{magenta}{overfit}---see below. 
+\item A smaller tree, with fewer branches, could produce a smaller variance
+and a better interpretation, at the cost of an increase in the \textcolor{magenta}{bias}. 
+\begin{itemize}
+\item This is the well-known bias-variance compromise/trade off. 
+\end{itemize}
+\item \textcolor{magenta}{Pruning} proceeds as follows:
+\end{itemize}
+\begin{enumerate}
+\item Construct a tree with a large number of branches, $T_{0}.$ 
+\item Prune this tree, with a parameter $\alpha,$ to obtain a \textcolor{magenta}{sub-tree}
+that gives a smaller test error, 
+\[
+e_{T}=\sum_{m=1}^{\left|T\right|}\sum_{x_{i}\in R_{m}}\left(y_{i}-\hat{y}_{R_{m}}\right)^{2}+\alpha\left|T\right|,
+\]
+where
+\begin{enumerate}
+\item $\left|T\right|$ is the number of terminal nodes of tree $T,$ 
+\item the region $R_{m}$ corresponds to the terminal node $m,$ and
+\item $\hat{y}_{R_{m}}$ is the average of the training observations in
+$R_{m}.$ 
+\end{enumerate}
+\end{enumerate}
+\begin{itemize}
+\item The parameter $\alpha$ represents a \textcolor{magenta}{compromise}
+between the complexity of the sub-tree and its fit to the training
+data. 
+\begin{itemize}
+\item It is the same penalization as is used in the LASSO regression . 
+\item The value of $\alpha$ is selected by a validation set, or preferably
+by \textcolor{magenta}{cross-validation}
+\end{itemize}
+\end{itemize}
+
+\foilhead{Classification Trees}
+\begin{itemize}
+\item These are trees that predict a \textcolor{magenta}{qualitative response},
+in the form of a category or class. 
+\item The tree is constructed by recursive binary division, based on the
+classification error rate. 
+\item In practice, the \textcolor{magenta}{GINI index} is used as a measure
+of total variance instead of the RSS, and is defined by 
+\[
+G=\sum_{k=1}^{K}\hat{p}_{mk}\left(1-\hat{p}_{mk}\right),
+\]
+where $\hat{p}_{mk}$ is the proportion of training observations in
+region $m$ and class $k.$ 
+\end{itemize}
+
+\foilhead{Example: Cardiac data }
+
+\begin{figure}
+\includegraphics[scale=0.65]{\string"/Users/markasch/Dropbox/3Teaching/stat-ML/M2/03resources/ISLR/All Figures/Chapter8/8.6\string".pdf}
+
+\caption{Tree without pruning; training, cross-validation and test errors;
+tree after pruning.}
+
+\end{figure}
+
+
+\foilhead{Trees vs. Linear Models}
+\begin{itemize}
+\item Recall: in \textcolor{magenta}{linear regression} we assumed a model
+of the form 
+\[
+f(X)=\beta_{0}+\sum_{j=1}^{p}\beta_{j}X_{j}.
+\]
+\item In\textcolor{magenta}{{} regression trees}, the model has the form 
+\[
+f(X)=\sum_{m=1}^{M}c_{m}\boldsymbol{1}_{(X\in R_{m})}.
+\]
+\item Which model is better?
+\begin{itemize}
+\item If the relation between features and response is well approximated
+by a linear model, then SLR will be better than CART because it exploits
+the linear structure. 
+\item If the relation is complex and nonlinear, then decision trees will
+be better. 
+\end{itemize}
+\end{itemize}
+
+\foilhead{Pros and Cons}
+\begin{dinglist}{52}
+\item Easy to explain and interpret.
+\item Closer to the process of human decision-making.
+\item Nice graphical representation.
+\end{dinglist}
+\begin{dinglist}{56}
+\item Prediction accuracy is often lower.
+\item Lack of robustness.
+\end{dinglist}
+
+\foilhead{Multiples Trees}
+
+To construct more powerful, tree-based prediction methods, we use
+of different approaches for \textcolor{magenta}{aggregating} trees: 
+\begin{enumerate}
+\item Bagging. 
+\item Boosting. 
+\item Random Forests. 
+\end{enumerate}
+
+\foilhead{Bagging}
+\begin{itemize}
+\item Decision trees have \textcolor{magenta}{high variances}.
+\begin{itemize}
+\item If we randomly split the data in two, we will find \textcolor{magenta}{different}
+trees for each half. 
+\item A low variance method will produce the \textcolor{magenta}{same} result
+when applied to distinct subsets. 
+\end{itemize}
+\end{itemize}
+\begin{defn}
+[Bagging] Bootstrap aggregation, or \emph{bagging}, is a general
+procedure for variance reduction of a statistical learning method.
+\end{defn}
+\begin{itemize}
+\item Recall:
+\begin{itemize}
+\item For a set of $n$ independent observations, $Z_{1},\ldots,Z_{n},$
+each with variance $\sigma^{2},$ the variance of the mean $\bar{Z}$
+is equal to $\sigma^{2}/n.$ 
+\item So, taking the average of such a set of observations, will always
+\textcolor{magenta}{reduce} the variance, and 
+\item as a result \textcolor{magenta}{increase} the accuracy of a statistical
+learning method.
+\end{itemize}
+\item We can create multiple training sets by using a \textcolor{magenta}{bootstrap}
+approach, based on \textcolor{magenta}{sampling with replacement}.
+The steps are:
+\begin{itemize}
+\item Generate $B$ different training sets. 
+\item Perform the learning to obtain $\hat{f}^{*b}(x)$ for sample $b.$ 
+\item Calculate the average over all the predictions (bagging), 
+\[
+\hat{f}_{\mathrm{bag}}=\frac{1}{B}\sum_{b=1}^{B}\hat{f}^{*b}(x).
+\]
+\end{itemize}
+\item Bagging is particularly efficient for decision trees, and usually
+uses a few \textcolor{magenta}{hundred} trees for the aggregation.
+\end{itemize}
+
+\foilhead[-0.5in]{Out-of-Bag (OOB) estimation}
+\begin{itemize}
+\item To estimate the test error, without cross-validation or validation
+sets, we can exploit the observations that are \textcolor{magenta}{never
+chosen} in the sampling with replacement.
+\begin{itemize}
+\item On average, each tree obtained from bagging only uses \textcolor{magenta}{two-thirds}
+of the observations in the dataset. 
+\item The remaining one-third are called the \textcolor{magenta}{OOB observations}. 
+\item So, to estimate the test error without having to resort to the usual
+validation sets or cross-validation, one can use these \textcolor{magenta}{unused}
+observations. 
+\item We take the average, or the majority vote, to compute the prediction. 
+\end{itemize}
+\item An \textcolor{magenta}{OOB prediction} is finally obtained for each
+of the $n$ observations, then we calculate an MSE, or an overall
+classification error. 
+\item For $B$ large enough, the OOB error is equivalent to the \textcolor{magenta}{LOOCV}
+error---see Lecture on Resampling---and can replace cross-validation
+when it becomes too expensive, in particular for \textcolor{magenta}{big
+data}.
+\end{itemize}
+
+\foilhead{Random Forests (RF)}
+\begin{itemize}
+\item RF improves bagging by performing a \textcolor{magenta}{decorrelation}
+among the multiple trees. 
+\begin{itemize}
+\item It is based on the fact that the average of decorrelated random variables
+will always produce a \textcolor{magenta}{lower variance} than an
+average of correlated variables. 
+\end{itemize}
+\item We proceed as for bagging: 
+\begin{itemize}
+\item Construct a given number of trees from bootstrap samples. 
+\item But, at each division/split, only a \textcolor{magenta}{random subsample}
+of $m$ predictors ($m<p$) is chosen as candidates for the division. 
+\item The division is based on one of these $m$ predictors. 
+\item A \textcolor{magenta}{new sample} is drawn at each division. 
+\item Normally, $m\approx\sqrt{p},$ where $p$ is the number of predictors. 
+\item When $m=p,$ we are in the case of \textcolor{magenta}{bagging}.
+\end{itemize}
+\item During classical bagging, all the trees obtained will be \textcolor{magenta}{similar}
+because the strongest predictor will be chosen each time for the topmost
+split. 
+\begin{itemize}
+\item This is not the case during RF, and the result is a decorrelation
+between the trees. 
+\item This is particularly pertinent when we have a large number of \textcolor{magenta}{correlated
+predictors}.
+\end{itemize}
+\item RF provides, thanks to the random choice of topmost splits, a \textcolor{magenta}{ranking}
+of the \textcolor{magenta}{importance}/influence of the explanatory
+variables. This can eventually be used as a basis for \textcolor{magenta}{model
+reduction}.
+\end{itemize}
+
+\foilhead{Algorithms for RF}
+\begin{itemize}
+\item There are two recommended packages for RF in R. 
+\begin{itemize}
+\item The first is the\texttt{\textcolor{blue}{{} randomForest}} library:
+\end{itemize}
+\end{itemize}
+\begin{verbatim}
+   library(randomForest)
+   model <- randomForest(formula, data=..., 
+                         na.action=..., 
+                         ntree=..., mtry=...)
+\end{verbatim}
+\begin{itemize}
+\item The second is within the \texttt{\textcolor{blue}{caret}} framework:
+\end{itemize}
+\begin{verbatim}
+library(caret) model <- train(formula, data=...,
+na.action=..., method=rf)
+\end{verbatim}
+\begin{itemize}
+\item In python, Random Forest is provided via the \texttt{\textcolor{blue}{RandomForestRegressor}}
+and \texttt{\textcolor{blue}{RandomForestClassifier}} classes.
+\end{itemize}
+\begin{lyxcode}
+from~sklearn.ensemble~import~RandomForestRegressor~
+
+from~sklearn.datasets~import~make\_regression~
+
+X,~y~=~make\_regression(n\_features=4,~
+
+~~~~~~~~~~~~n\_informative=2,~
+
+~~~~~~~~~~~~random\_state=0,~shuffle=False)
+
+regr~=~RandomForestRegressor(max\_depth=2,~
+
+~~~~~~~~~~~~~~random\_state=0)~
+
+regr.fit(X,~y)~
+
+print(regr.predict({[}{[}0,~0,~0,~0{]}{]}))
+\end{lyxcode}
+
+\foilhead{Boosting}
+\begin{itemize}
+\item This is another procedure that can be applied to decision trees. 
+\item We fit, \textcolor{magenta}{progressively} on the basis of smaller
+trees, the global tree. 
+\item Three\textcolor{magenta}{{} tuning parameters} are used for this:
+\begin{itemize}
+\item Number of \textcolor{magenta}{trees}, $B,$ between $500$ and $1000.$ 
+\item \textcolor{magenta}{Shrinkage} parameter, $\lambda>0,$ typically
+$0.01$ or $0.001.$ 
+\item Number of \textcolor{magenta}{splits} in each tree, $d,$ often with
+$d=1.$ 
+\end{itemize}
+\item It is by fitting to \textcolor{magenta}{residues}, slowly, that boosting
+improves $\hat{f}$ in the regions where the performance is bad
+\[
+\hat{f}(x)\leftarrow\hat{f}(x)+\lambda\hat{f}^{b}(x),
+\]
+where $\hat{f}^{b}(x)$ is fitted to residues, for $b=1,2,\ldots,B.$
+\item \textcolor{magenta}{AdaBoost} is the basic boosting algorithm, using
+adaptive boosting.
+\item \textcolor{magenta}{XGBoost} is a highly efficient algorithm\texttt{\textcolor{blue}{}}~\\
+\texttt{\textcolor{blue}{https://xgboost.readthedocs.io}} \\
+that can be used for very large data volumes (big data), and is based
+on a gradient method for accelerating the optimization.
+\end{itemize}
+
+\foilhead{Examples}
+\begin{enumerate}
+\item A very comprehensive example for classifying edible status of mushrooms
+as a function of 22 morphological features - see \texttt{\textcolor{blue}{class-champignon.html}}
+\item Gradient Boosting for iris data (using caret) - see\texttt{\textcolor{blue}{{}
+boost-iris.html}}.
+\item Gradient Boosting for baseball data - see \texttt{\textcolor{blue}{boostingHitters.html}}.
+\end{enumerate}
+
+\foilhead{References}
+\begin{enumerate}
+\item M. DeGroot, M. Schervish, \emph{Probability and Statistics}, Addison
+Wesley, 2002.
+\item Spiegel, Murray and Larry Stephens,\emph{ Schaum's Outline of Statistics,}
+6th edition, McGraw Hill. 2017.
+\item G. James, D. Witten, T. Hastie, R. Tibshirani. \emph{An Introduction
+to Statistical Learning with Applications in R.} Springer. 2013.
+\item T. Hastie, R. Tibshirani, J. Friedman. \emph{The Elements of Statistical
+Learning}. Springer. 2009.
+\item Rachel Schutt and Cathy O\textquoteright Neil. \emph{Doing Data Science.}
+O'Reilly. 2014.
+\end{enumerate}
+
+\end{document}
