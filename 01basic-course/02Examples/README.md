@@ -14,7 +14,7 @@
    - Concrete: comparison between simple and multiple regression on a database with quantitative and categorical variables, with generation of a surrogate model $\rightarrow$  [data](mlreg_concrete/ConcreteStrenght.csv), [notebook](mlreg_concrete/mlreg_concrete.ipynb), [md](mlreg_concrete/mlreg_concrete.md), [pdf](mlreg_concrete/mlreg_concrete.pdf)
  - SVM Regression: nonlinear regression with a radial kernel for LIDAR data $\rightarrow$  [Rmd](svm_reg/svm_reg.Rmd), [html](svm_regsvm_reg.html), [markdown](svm_regsvm_reg.md)
  - Classification
-    - k-NN classifier for `iris` data: fit a simple classifier to multi-species data  $\rightarrow$  [Rmd]k_nn_iris/k_nn_iris_md.Rmd), [html](k_nn_iris/k_nn_iris.html), [markdown](k_nn_iris/k_nn_iris_md.md)
+    - k-NN classifier for `iris` data: fit a simple classifier to multi-species data  $\rightarrow$  [Rmd](k_nn_iris/k_nn_iris_md.Rmd), [html](k_nn_iris/k_nn_iris.html), [markdown](k_nn_iris/k_nn_iris_md.md)
 	- SVM classifier for  `iris` data: EDA and feature selection $\rightarrow$ [Rmd](svm_iris/svm_iris.Rmd), [html](svm_iris/svm_iris.html), [markdown](svm_iris/svm_iris.md)
 - Neural Networks
    - Squares: train a simple NN to learn the rule of squares for the first 10 integers $\rightarrow$ [data](nnet_squares/squares.csv), [Rmd](nnet_squares/nnet_squares.Rmd), [html](nnet_squares/nnet_squares.html), [markdown](nnet_squares/nnet_squares.md)
